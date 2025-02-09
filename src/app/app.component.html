@@ -1,0 +1,45 @@
+<router-outlet
+  class="p-4 *:p-8 grid divide-amber-50 divide-x grid-cols-[auto_1fr]">
+  <aside>
+    <ul class="group">
+      @for (layer of layers(); track layer.id) {
+        <li>
+          <app-label
+            #label="appLabel"
+            [layer]="layer"
+            [attr.aria-selected]="selected().id === layer.id"
+            class="group-has-[app-label:hover]:not-hover:opacity-25 block transition-all aria-selected:underline"
+            (click)="selected.set(layer)" />
+        </li>
+      }
+    </ul>
+  </aside>
+  <main>
+    @let selectedLayer = selected();
+    @if (selectedLayer) {
+      @if (selectedLayer.imageUrl?.hasValue()) {
+        <img
+          class="size-20 rounded-full object-cover"
+          [src]="selectedLayer.imageUrl?.value()"
+          alt="Image of {{ selectedLayer.label?.value()?.name }}" />
+      }
+
+      <table class="table-fixed text-sm text-left rtl:text-right text-gray-500">
+        <thead class="text-xs text-gray-700 uppercase">
+          <th scope="col" class="px-6 py-3"></th>
+          <th scope="col" class="px-6 py-3"></th>
+        </thead>
+        <tbody>
+          @for (row of selectedLayer.tableRows?.value(); track $index) {
+            @for (cell of row | keyvalue; track $index) {
+              <tr class="px-6 py-4 font-medium whitespace-nowrap text-white">
+                <th>{{ cell.key }}</th>
+                <td>{{ cell.value }}</td>
+              </tr>
+            }
+          }
+        </tbody>
+      </table>
+    }
+  </main>
+</router-outlet>
