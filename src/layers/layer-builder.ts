@@ -36,6 +36,7 @@ export class LayerModelBuilder<
   >(feature: IFeature, toOmit?: Name) {
     return Object.assign(
       new LayerModelBuilder([...this.#features, feature], this.id),
+      this,
       toOmit ? { [toOmit]: undefined } : undefined
     ) as unknown as Prettify<
       Omit<

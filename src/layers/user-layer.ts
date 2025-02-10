@@ -39,6 +39,6 @@ export const UserLayer = LayerModelBuilder.create('layer1')
   })
   .withImage(({ users }) => {
     const user = users.value()?.[0];
-    return user?.picture.large;
+    return user?.picture.medium;
   })
   .build();

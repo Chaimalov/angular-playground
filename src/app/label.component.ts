@@ -11,8 +11,10 @@ import { Layer } from '../layers/types';
       class="list-disc marker:color-current"
       [style.color]="label?.value()?.color">
       <span>
-        @if (!label?.value() || label?.isLoading()) {
+        @if (label?.isLoading()) {
           Loading...
+        } @else if (label?.error()) {
+          {{ label?.error() }}
         } @else {
           {{ label?.value()?.name }}
         }
