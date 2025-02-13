@@ -1,9 +1,20 @@
 import { patchState, signalStore, type, withMethods } from '@ngrx/signals';
-import { addEntity, withEntities } from '@ngrx/signals/entities';
+import { addEntity, removeEntity, withEntities } from '@ngrx/signals/entities';
 import { inject, Injector } from '@angular/core';
 import { JokesLayer } from './jokes-layer';
 import { Layer, LAYER_ID } from './types';
 import { UserLayer } from './user-layer';
+
+/**
+ * Parameters for adding a new layer.
+ *
+ * @property {string} id - The unique identifier for the layer.
+ * @property {'User' | 'Joke'} model - The type of model associated with the layer.
+ */
+type LayerConfig = {
+  id: string;
+  model: 'User' | 'Joke';
+};
 
 export const LayerStore = signalStore(
   {
@@ -17,7 +28,7 @@ export const LayerStore = signalStore(
     const injector = inject(Injector);
 
     return {
-      addLayer: ({ id, model }: { id: string; model: 'User' | 'Joke' }) => {
+      addLayer: ({ id, model }: LayerConfig) => {
         const layer = Injector.create({
           parent: injector,
           name: id,
@@ -46,6 +57,10 @@ export const LayerStore = signalStore(
             collection: 'layers',
           })
         );
+      },
+      removeLayer: (id: string) => {
+        // Remove the layer with the specified ID.
+        patchState(store, removeEntity(id, { collection: 'layers' }));
       },
     };
   })

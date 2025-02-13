@@ -1,7 +1,7 @@
 import { KeyValuePipe } from '@angular/common';
 import { Component, inject, linkedSignal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { LayerStore } from '../layers';
+import { Layer, LayerStore } from '../layers';
 import { LabelComponent } from './label.component';
 
 @Component({
@@ -10,8 +10,16 @@ import { LabelComponent } from './label.component';
   templateUrl: './app.component.html',
 })
 export class AppComponent {
-  private store = inject(LayerStore);
-  protected selected = linkedSignal(() => this.store.layersEntities()[0]);
+  protected store = inject(LayerStore);
+  protected selected = linkedSignal({
+    source: () => this.store.layersEntities()[0],
+    computation: (source, previous: { value: Layer } | undefined) => {
+      if (previous?.value && this.store.layersEntityMap()[previous.value.id]) {
+        return previous.value;
+      }
+      return source;
+    },
+  });
   protected layers = this.store.layersEntities;
 
   constructor() {

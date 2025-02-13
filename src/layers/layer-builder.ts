@@ -68,7 +68,6 @@ export class LayerModelBuilder<
     return this.next(() => withContext<Params, Context>(...provider));
   }
 
-  // #region Table Feature
   public withColumns(...provider: Parameters<typeof withColumns<Params>>) {
     return this.next(() => withColumns(...provider), 'withColumns');
   }
@@ -76,7 +75,6 @@ export class LayerModelBuilder<
   public withRows(...provider: Parameters<typeof withRows<Params>>) {
     return this.next(() => withRows(...provider), 'withRows');
   }
-  // #endregion
 
   public build() {
     const withFeatures = () =>
