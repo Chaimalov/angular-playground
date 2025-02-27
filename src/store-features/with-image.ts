@@ -1,15 +1,15 @@
 import { resource } from '@angular/core';
 import { signalStoreFeature, withProps } from '@ngrx/signals';
-import { resolveResource, Asset } from './utils';
+import { resolveResource, Retrievable } from './utils';
 
 export const withImage = <Params>(
-  provider: (params: Params) => Asset<string | undefined>
+  provider: (params: Params) => Retrievable<string | undefined>
 ) => {
   return signalStoreFeature(
     withProps(params => {
       const imageResource = resource({
         request: () => provider(params as Params),
-        loader: resolveResource,
+        stream: resolveResource,
       });
 
       return {

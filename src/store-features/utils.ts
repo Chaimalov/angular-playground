@@ -1,20 +1,47 @@
 import {
   computed,
   ResourceLoaderParams,
-  ResourceStatus,
+  ResourceStreamItem,
+  signal,
   Signal,
 } from '@angular/core';
+import { fromEvent, isObservable, Observable, takeUntil } from 'rxjs';
 
 export async function resolveResource<
-  R extends ResourceLoaderParams<any>,
-  T = R extends ResourceLoaderParams<Asset<infer L>> ? L : never,
->({ request, abortSignal, previous }: R): Promise<T | undefined> {
-  if (previous.status === ResourceStatus.Idle) {
-    return undefined;
+  R extends ResourceLoaderParams<Retrievable<unknown>>,
+  T = R extends ResourceLoaderParams<Retrievable<infer L>> ? L : never,
+>({ request, abortSignal }: R): Promise<Signal<ResourceStreamItem<T>>> {
+  if (isObservable(request)) {
+    const stream = signal<ResourceStreamItem<T>>({ value: undefined as T });
+    const { promise, resolve } =
+      Promise.withResolvers<Signal<ResourceStreamItem<T>>>();
+    (request as Observable<T>)
+      .pipe(takeUntil(fromEvent(abortSignal, 'abort')))
+      .subscribe({
+        next: value => {
+          stream.set({ value });
+          resolve(stream);
+        },
+        error: error => {
+          stream.set({ error });
+          resolve(stream);
+        },
+      });
+
+    return promise;
   }
-  return typeof request === 'function'
-    ? (request as (...args: any[]) => Promise<T>)(abortSignal)
-    : request;
+
+  if (typeof request === 'function') {
+    try {
+      return signal({
+        value: await request(abortSignal),
+      });
+    } catch (error) {
+      return signal({ error });
+    }
+  }
+
+  return signal({ value: request as T });
 }
 
 type LazyResourceRequest<T> = {
@@ -38,9 +65,10 @@ export function lazyRequest<T>({
   })();
 }
 
-export type Asset<T> =
+export type Retrievable<T> =
   | Exclude<T, Function>
-  | ((abortSignal: AbortSignal) => Promise<T>);
+  | ((abortSignal: AbortSignal) => Promise<T>)
+  | Observable<T>;
 
 export type TupleToIntersect<T extends any[]> = T extends [
   infer First,
@@ -52,3 +80,23 @@ export type TupleToIntersect<T extends any[]> = T extends [
 export type Prettify<T extends {}> = {
   [K in keyof T]: T[K];
 } & NonNullable<unknown>;
+
+export type UnionToIntersection<U> = (
+  U extends any ? (k: U) => void : never
+) extends (k: infer I) => void
+  ? I
+  : never;
+
+export type UnionToOvlds<U> = UnionToIntersection<
+  U extends any ? (f: U) => void : never
+>;
+
+export type PopUnion<U> =
+  UnionToOvlds<U> extends (a: infer A) => void ? A : never;
+
+export type IsUnion<T> = [T] extends [UnionToIntersection<T>] ? false : true;
+
+export type UnionToArray<T, A extends unknown[] = []> =
+  IsUnion<T> extends true
+    ? UnionToArray<Exclude<T, PopUnion<T>>, [PopUnion<T>, ...A]>
+    : [T, ...A];

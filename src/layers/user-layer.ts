@@ -1,7 +1,7 @@
 import { LayerModelBuilder } from './layer-builder';
 import { UserResponse } from './user.types';
 
-export const UserLayer = LayerModelBuilder.create('layer1')
+export const UserLayer = LayerModelBuilder.create()
   .withContext({
     users: () => {
       return async () => {
@@ -17,8 +17,8 @@ export const UserLayer = LayerModelBuilder.create('layer1')
       };
     },
   })
-  .withLabel(({ users }) => {
-    const user = users.value()?.[0];
+  .withLabel(({ context }) => {
+    const user = context.users.value()?.[0];
     if (!user) return undefined;
 
     return {
@@ -26,8 +26,8 @@ export const UserLayer = LayerModelBuilder.create('layer1')
       color: user.gender === 'male' ? 'lightblue' : 'pink',
     };
   })
-  .withRows(({ users }) => {
-    return users.value()?.map(user => {
+  .withRows(({ context }) => {
+    return context.users.value()?.map(user => {
       const { email, nat, phone, cell } = user;
       return {
         email,
@@ -37,8 +37,8 @@ export const UserLayer = LayerModelBuilder.create('layer1')
       };
     });
   })
-  .withImage(({ users }) => {
-    const user = users.value()?.[0];
+  .withImage(({ context }) => {
+    const user = context.users.value()?.[0];
     return user?.picture.medium;
   })
   .build();

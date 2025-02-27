@@ -1,18 +1,15 @@
-<router-outlet
-  class="p-4 *:p-8 grid divide-amber-50 divide-x grid-cols-[auto_1fr]">
+<router-outlet class="p-4 *:p-8 grid divide-amber-50 divide-x grid-cols-[auto_1fr]">
   <aside>
-    <ul class="group grid grid-cols-[1fr_auto] gap-x-4">
+    <ul class="group">
       @for (layer of layers(); track layer.id) {
-        <li class="contents">
+        <li class="grid grid-cols-[1fr_auto] gap-x-4" [style.view-transition-name]="'layer-' + layer.id">
           <app-label
             #label="appLabel"
             [layer]="layer"
             [attr.aria-selected]="selected().id === layer.id"
-            class="group-has-[app-label:hover]:not-hover:opacity-25 block transition-all aria-selected:underline"
-            (click)="selected.set(layer)" />
-          <button class="cursor-pointer" (click)="store.removeLayer(layer.id)">
-            &#x2715;
-          </button>
+            class="label group-has-[app-label:hover]:not-hover:opacity-25 block transition-all aria-selected:underline"
+            (click)="setSelected(layer)" />
+          <button class="cursor-pointer" (click)="store.removeLayer(layer.id)">&#x2715;</button>
         </li>
       }
     </ul>
@@ -20,11 +17,11 @@
   <main>
     @let selectedLayer = selected();
     @if (selectedLayer) {
-      @if (selectedLayer.imageUrl?.hasValue()) {
+      @if (selectedLayer.imageUrl && selectedLayer.imageUrl.hasValue()) {
         <img
           class="size-20 rounded-full object-cover"
-          [src]="selectedLayer.imageUrl?.value()"
-          alt="Image of {{ selectedLayer.label?.value()?.name }}" />
+          [src]="selectedLayer.imageUrl.value()"
+          alt="Image of {{ selectedLayer.label.value()?.name }}" />
       }
 
       <table class="table-fixed text-sm text-left rtl:text-right text-gray-500">

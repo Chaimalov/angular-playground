@@ -1,6 +1,6 @@
 import { resource } from '@angular/core';
 import { signalStoreFeature, withProps } from '@ngrx/signals';
-import { Asset, resolveResource } from './utils';
+import { Retrievable, resolveResource } from './utils';
 
 type Label = {
   name: string;
@@ -10,13 +10,13 @@ type Label = {
 const LABEL_REF = Symbol('label');
 
 export const withLabel = <Params>(
-  provider: (params: Params) => Asset<Label | undefined>
+  provider: (params: Params) => Retrievable<Label | undefined>
 ) => {
   return signalStoreFeature(
     withProps(({ ...params }) => {
       const labelResource = resource({
         request: () => provider(params as Params),
-        loader: resolveResource,
+        stream: resolveResource,
       });
 
       return {

@@ -1,18 +1,22 @@
 import { resource } from '@angular/core';
-import { signalStoreFeature, withProps } from '@ngrx/signals';
-import { resolveResource, Asset } from './utils';
+import { signalStoreFeature, withProps, withState } from '@ngrx/signals';
+import { resolveResource, Retrievable } from './utils';
 
 const TABLE_ROWS = Symbol('table rows');
 const TABLE_COLUMNS = Symbol('table columns');
 
 export const withColumns = <Params>(
-  provider: (params: Params) => Asset<string[]>
+  provider: (params: Params) => Retrievable<string[]>
 ) => {
   return signalStoreFeature(
+    withState(() => ({
+      sort: [] as string[],
+    })),
     withProps(params => {
       const columnsResource = resource({
         request: () => provider(params as Params),
-        loader: resolveResource,
+        stream: resolveResource,
+        // loader: resolveResource,
       });
 
       return {
@@ -24,13 +28,15 @@ export const withColumns = <Params>(
 };
 
 export const withRows = <Params>(
-  provider: (params: Params) => Asset<Array<Record<string, string>> | undefined>
+  provider: (
+    params: Params
+  ) => Retrievable<Array<Record<string, string>> | undefined>
 ) => {
   return signalStoreFeature(
     withProps(params => {
       const rowsResource = resource({
         request: () => provider(params as Params),
-        loader: resolveResource,
+        stream: resolveResource,
       });
 
       return {

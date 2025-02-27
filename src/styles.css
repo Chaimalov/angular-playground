@@ -1,4 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import 'open-props/easings';
+@import 'open-props/animations';
 @import 'tailwindcss';
 @layer theme, base, components, utilities;
+
+::view-transition-group(*) {
+  animation-duration: 300ms;
+  animation-timing-function: ease-in-out;
+}
+
+::view-transition-new(*.label):only-child {
+  animation: var(--animation-slide-in-down) forwards;
+}
+
+::view-transition-old(*.label):only-child {
+  animation: var(--animation-fade-out) forwards;
+}
+
+::view-transition-new(root),
+::view-transition-old(root) {
+  animation: none;
+}
