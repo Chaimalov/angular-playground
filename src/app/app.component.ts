@@ -1,9 +1,11 @@
 import { KeyValuePipe } from '@angular/common';
-import { ApplicationRef, Component, effect, inject, linkedSignal } from '@angular/core';
+import { Component, inject, linkedSignal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Layer, LayerStore } from '../layers';
-import { LabelComponent } from './label.component';
+import { withMethods } from '@ngrx/signals';
 import { v4 } from 'uuid';
+import { JokesLayer, Layer, LayerStore, UserLayer } from '../layers';
+import { LabelComponent } from './label.component';
+import { Table } from '../store-features';
 
 @Component({
   selector: 'app-root',
@@ -31,6 +33,9 @@ export class AppComponent {
   }
 
   constructor() {
+    this.store.registerLayerModel('User', UserLayer());
+    this.store.registerLayerModel('Joke', JokesLayer());
+
     Array.from({ length: 20 }).forEach((_, i) => {
       this.store.addLayer({
         id: v4(),

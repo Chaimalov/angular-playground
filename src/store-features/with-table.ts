@@ -1,20 +1,22 @@
-import { resource } from '@angular/core';
-import { signalStoreFeature, withProps, withState } from '@ngrx/signals';
+import { resource, Signal } from '@angular/core';
+import { signalStoreFeature, SignalStoreFeatureResult, type, withProps, withState } from '@ngrx/signals';
 import { resolveResource, Retrievable } from './utils';
+import { Store } from '../layers/create-layer-model';
 
 const TABLE_ROWS = Symbol('table rows');
 const TABLE_COLUMNS = Symbol('table columns');
 
-export const withColumns = <Params>(
-  provider: (params: Params) => Retrievable<string[]>
+export const withColumns = <Params extends SignalStoreFeatureResult>(
+  provider: (params: Store<Params>) => Retrievable<string[]>
 ) => {
   return signalStoreFeature(
+    type<Params>(),
     withState(() => ({
       sort: [] as string[],
     })),
     withProps(params => {
       const columnsResource = resource({
-        request: () => provider(params as Params),
+        request: () => provider(params),
         stream: resolveResource,
         // loader: resolveResource,
       });
@@ -27,15 +29,14 @@ export const withColumns = <Params>(
   );
 };
 
-export const withRows = <Params>(
-  provider: (
-    params: Params
-  ) => Retrievable<Array<Record<string, string>> | undefined>
+export const withRows = <Params extends SignalStoreFeatureResult>(
+  provider: (params: Store<Params>) => Retrievable<Array<Record<string, string>> | undefined>
 ) => {
   return signalStoreFeature(
+    type<Params>(),
     withProps(params => {
       const rowsResource = resource({
-        request: () => provider(params as Params),
+        request: () => provider(params),
         stream: resolveResource,
       });
 
@@ -45,4 +46,9 @@ export const withRows = <Params>(
       };
     })
   );
+};
+
+export const Table = {
+  withRows,
+  withColumns,
 };

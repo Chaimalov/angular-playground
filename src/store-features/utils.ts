@@ -1,10 +1,5 @@
-import {
-  computed,
-  ResourceLoaderParams,
-  ResourceStreamItem,
-  signal,
-  Signal,
-} from '@angular/core';
+import { computed, ResourceLoaderParams, ResourceStreamItem, signal, Signal } from '@angular/core';
+import { SignalStoreFeatureResult } from '@ngrx/signals';
 import { fromEvent, isObservable, Observable, takeUntil } from 'rxjs';
 
 export async function resolveResource<
@@ -13,20 +8,17 @@ export async function resolveResource<
 >({ request, abortSignal }: R): Promise<Signal<ResourceStreamItem<T>>> {
   if (isObservable(request)) {
     const stream = signal<ResourceStreamItem<T>>({ value: undefined as T });
-    const { promise, resolve } =
-      Promise.withResolvers<Signal<ResourceStreamItem<T>>>();
-    (request as Observable<T>)
-      .pipe(takeUntil(fromEvent(abortSignal, 'abort')))
-      .subscribe({
-        next: value => {
-          stream.set({ value });
-          resolve(stream);
-        },
-        error: error => {
-          stream.set({ error });
-          resolve(stream);
-        },
-      });
+    const { promise, resolve } = Promise.withResolvers<Signal<ResourceStreamItem<T>>>();
+    (request as Observable<T>).pipe(takeUntil(fromEvent(abortSignal, 'abort'))).subscribe({
+      next: value => {
+        stream.set({ value });
+        resolve(stream);
+      },
+      error: error => {
+        stream.set({ error });
+        resolve(stream);
+      },
+    });
 
     return promise;
   }
@@ -50,10 +42,7 @@ type LazyResourceRequest<T> = {
 };
 
 declare let isActive: Signal<boolean> | undefined;
-export function lazyRequest<T>({
-  request,
-  activeSignal,
-}: LazyResourceRequest<T>) {
+export function lazyRequest<T>({ request, activeSignal }: LazyResourceRequest<T>) {
   let _isActive = computed(() => isActive?.() || activeSignal?.() || false);
 
   if (!_isActive()) return;
@@ -68,35 +57,25 @@ export function lazyRequest<T>({
 export type Retrievable<T> =
   | Exclude<T, Function>
   | ((abortSignal: AbortSignal) => Promise<T>)
-  | Observable<T>;
-
-export type TupleToIntersect<T extends any[]> = T extends [
-  infer First,
-  ...infer Rest,
-]
-  ? First & TupleToIntersect<Rest>
-  : {};
+  | Omit<Observable<T>, 'pipe' | 'forEach' | 'subscribe'>;
 
 export type Prettify<T extends {}> = {
   [K in keyof T]: T[K];
 } & NonNullable<unknown>;
 
-export type UnionToIntersection<U> = (
-  U extends any ? (k: U) => void : never
-) extends (k: infer I) => void
-  ? I
-  : never;
+export type PrettifyFeatureResult<Result extends SignalStoreFeatureResult> = Prettify<{
+  state: Prettify<Result['state']>;
+  props: Prettify<Result['props']>;
+  methods: Prettify<Result['methods']>;
+}>;
 
-export type UnionToOvlds<U> = UnionToIntersection<
-  U extends any ? (f: U) => void : never
->;
+export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void ? I : never;
 
-export type PopUnion<U> =
-  UnionToOvlds<U> extends (a: infer A) => void ? A : never;
+export type UnionToOvlds<U> = UnionToIntersection<U extends any ? (f: U) => void : never>;
+
+export type PopUnion<U> = UnionToOvlds<U> extends (a: infer A) => void ? A : never;
 
 export type IsUnion<T> = [T] extends [UnionToIntersection<T>] ? false : true;
 
 export type UnionToArray<T, A extends unknown[] = []> =
-  IsUnion<T> extends true
-    ? UnionToArray<Exclude<T, PopUnion<T>>, [PopUnion<T>, ...A]>
-    : [T, ...A];
+  IsUnion<T> extends true ? UnionToArray<Exclude<T, PopUnion<T>>, [PopUnion<T>, ...A]> : [T, ...A];

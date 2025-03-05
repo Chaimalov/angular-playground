@@ -1,43 +1,69 @@
 import { Resource, resource, Signal } from '@angular/core';
-import { signalStoreFeature, withProps } from '@ngrx/signals';
+import { signalStoreFeature, SignalStoreFeatureResult, type, withProps } from '@ngrx/signals';
 import { resolveResource, Retrievable } from './utils';
+import { Store } from '../layers/create-layer-model';
 
-export const withContext = <
-  Params,
-  Context extends Record<string, (params: Params) => Retrievable<unknown>>,
->(
-  providers: Context
+export type Context = Record<string, () => Retrievable<unknown>>;
+
+/**
+ * @description
+ * Creates a feature that adds a `context` property to the store
+ * with the values returned from the provider.
+ *
+ * The provider function takes the store as an argument and must
+ * return an object with string keys and values being functions
+ * that return a `Retrievable<T>` type.
+ *
+ * The feature will create a resource for each key in the returned
+ * object, and will add the resource as a property on the `context`
+ * property of the store.
+ *
+ * @example
+ *
+ * const userStore = signalStore(
+ *   withContext(params => ({
+ *     user: () => params.users.value()[0],
+ *     users: () => params.users.value(),
+ *   }))
+ * );
+ *
+ * userStore.context.user // returns the first user in the users array
+ * userStore.context.users // returns the users array
+ */
+const withContext = <Params extends SignalStoreFeatureResult, TContext extends Context>(
+  provider: (params: Store<Params>) => TContext
 ) => {
   return signalStoreFeature(
+    type<Params>(),
     withProps(params => {
-      const context = Object.entries(providers).reduce(
-        (acc, [name, provider]) => {
-          const contextResource = resource({
-            request: () => provider(params as Params),
-            stream: resolveResource,
-          });
+      const providers = provider(params);
 
-          return {
-            ...acc,
-            [name]: contextResource.asReadonly(),
-          };
-        },
-        {}
-      );
+      const context = Object.entries(providers).reduce((acc, [name, data]) => {
+        const contextResource = resource({
+          request: data,
+          stream: resolveResource,
+        });
+
+        return {
+          ...acc,
+          [name]: contextResource.asReadonly(),
+        };
+      }, {});
 
       return {
         context: {
           ...(params as any).context,
           ...context,
         } as {
-          [K in keyof Context]: ReturnType<
-            typeof resource<
-              ReturnType<Context[K]> extends Retrievable<infer T> ? T : never,
-              unknown
-            >
+          [K in keyof TContext]: ReturnType<
+            typeof resource<ReturnType<TContext[K]> extends Retrievable<infer T> ? T : never, unknown>
           >;
         },
       };
     })
   );
+};
+
+export const Contextual = {
+  withContext,
 };

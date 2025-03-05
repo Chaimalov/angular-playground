@@ -1,5 +1,5 @@
-export * from './with-label';
-export * from './with-image';
+export * from './with-display';
 export * from './with-table';
 export * from './with-context';
+export * from './with-lifecycle';
 export * from './utils';

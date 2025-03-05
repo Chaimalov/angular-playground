@@ -1,15 +1,21 @@
-import { EmptyFeatureResult, signalStore, SignalStoreFeature } from '@ngrx/signals';
-import { Prettify, withColumns, withImage, withLabel, withRows } from '../store-features';
-import { inject, InjectionToken } from '@angular/core';
-import { withCleanup } from '../store-features/with-cleanup';
-import { LayerModel } from './layer-builder.types';
+import { InjectionToken } from '@angular/core';
+import { LayerModel } from './layer-model.types';
 
-export type SignalStoreFeatureResultExtractor<T extends SignalStoreFeature> =
-  T extends SignalStoreFeature<EmptyFeatureResult, infer R> ? R : never;
+export type LayerId = { id: string };
+export const LayerId = new InjectionToken<LayerId>('layerId');
 
-type LayerId = { id: string };
-export const LAYER_ID = new InjectionToken<LayerId>('layerId');
-
+/**
+ * @
+ * Represents a layer within the application.
+ *
+ * A layer encapsulates data and behavior, managed by the `LayerStore`.
+ * It can represent different models.
+ * Layers are created using the `createLayerModel` function and can
+ * be customized with specific properties and behaviors.
+ *
+ * @publicApi
+ * @see createLayerModel
+ * @see LayerStore
+ */
 export type Layer = InstanceType<LayerModel>;
-
 export const Layer = new InjectionToken<Layer>('Layer');
