@@ -1,22 +1,20 @@
 import { Component, input } from '@angular/core';
 import { Layer } from '../layers/types';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-label',
   exportAs: 'appLabel',
   template: `
-    @let label = layer().label;
-    <a
-      href="#"
-      class="list-disc marker:color-current"
-      [style.color]="label?.value()?.color">
+    <a href="#" class="list-disc marker:color-current" [style.color]="label.value()?.color">
       <span>
-        @if (label?.isLoading()) {
-          Loading...
-        } @else if (label?.error()) {
-          {{ label?.error() }}
+        @if (label.isLoading()) {
+          <span class="animate-pulse">Loading...</span>
+        } @else if (label.error()) {
+          {{ label.error() }}
         } @else {
-          {{ label?.value()?.name }}
+          {{ label.value()?.name }}
         }
       </span>
     </a>
@@ -24,4 +22,9 @@ import { Layer } from '../layers/types';
 })
 export class LabelComponent {
   public layer = input.required<Layer>();
+
+  protected label = rxResource({
+    request: this.layer,
+    loader: ({ request }) => request.label ?? of(undefined),
+  });
 }

@@ -1,3 +1,4 @@
+import { from, map } from 'rxjs';
 import { Contextual, Table, Visuals } from '../store-features';
 import { createLayerModelBlock } from './create-layer-model';
 
@@ -24,51 +25,39 @@ interface Dogs {
  *
  * @publicApi
  */
-export const JokesLayer = () =>
-  createLayerModelBlock(
-    Contextual.withContext(() => ({
-      jokes: () => {
-        return async () => {
-          const res = await fetch('https://official-joke-api.appspot.com/random_joke');
-          if (!res.ok) {
-            throw Error('Failed to fetch joke');
-          }
-          const jokeResponse: Jokes = await res.json();
-          return jokeResponse;
-        };
-      },
-      dogImage: () => {
-        return () => fetch('https://dog.ceo/api/breeds/image/random').then(res => res.json() as Promise<Dogs>);
-      },
-    })),
-    Visuals.withImage(({ context }) => {
-      return context.dogImage.value()?.message;
-    }),
-    Visuals.withLabel(({ context }) => {
-      const [joke, error] = [context.jokes.value(), context.jokes.error()];
-      if (error)
-        return {
-          name: (error as Error).message,
-          color: 'red',
-        };
-      if (!joke)
-        return {
-          name: 'Loading...',
-          color: '#ffffff50',
-        };
-      return {
+export const JokesLayer = createLayerModelBlock(
+  Contextual.withContext(() => ({
+    jokes: from(
+      (async () => {
+        const res = await fetch('https://official-joke-api.appspot.com/random_joke');
+        if (!res.ok) {
+          throw Error('Failed to fetch joke');
+        }
+        const jokeResponse: Jokes = await res.json();
+        return jokeResponse;
+      })()
+    ),
+  })),
+  Contextual.withContext(() => ({
+    dogImage: from(fetch('https://dog.ceo/api/breeds/image/random').then<Dogs>(res => res.json())),
+  })),
+  Visuals.withImage(({ context }) => context.dogImage.pipe(map(({ message }) => message))),
+  Visuals.withLabel(({ context }) =>
+    context.jokes.pipe(
+      map(joke => ({
         name: `joke ${joke.id.toString()}`,
         color: 'yellow',
-      };
-    }),
-    Table.withRows(({ context }) => {
-      const joke = context.jokes.value();
-      if (!joke) return undefined;
-      return [
+      }))
+    )
+  ),
+  Table.withRows(({ context }) =>
+    context.jokes.pipe(
+      map(joke => [
         {
           setup: joke.setup,
           punchline: joke.punchline,
         },
-      ];
-    })
-  );
+      ])
+    )
+  )
+);

@@ -1,5 +1,6 @@
 import { Type } from '@angular/core';
-import { Prettify, signalState, signalStore, StateSource } from '@ngrx/signals';
+import { Prettify, signalStore, StateSource } from '@ngrx/signals';
+import { of } from 'rxjs';
 import { Lifecycle, Table, Visuals } from '../store-features';
 import { createLayerModelBlock, requiredFeatures } from './create-layer-model';
 
@@ -11,10 +12,10 @@ const BaseLayer = signalStore(
 const PotentialLayer = signalStore(
   requiredFeatures(),
   createLayerModelBlock(
-    Table.withColumns(() => []),
-    Table.withRows(() => []),
-    Visuals.withImage(() => undefined),
-    Visuals.withLabel(() => undefined),
+    Table.withColumns(() => of([])),
+    Table.withRows(() => of([])),
+    Visuals.withImage(() => of('')),
+    Visuals.withLabel(() => of({ name: '', color: '' })),
     Lifecycle.withCleanup()
   )
 );

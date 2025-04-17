@@ -1,4 +1,4 @@
-<router-outlet class="p-4 *:p-8 grid divide-amber-50 divide-x grid-cols-[auto_1fr]">
+<div class="p-4 *:p-8 grid divide-amber-50 divide-x grid-cols-[auto_1fr]">
   <aside>
     <ul class="group">
       @for (layer of layers(); track layer.id) {
@@ -15,13 +15,10 @@
     </ul>
   </aside>
   <main>
-    @let selectedLayer = selected();
+    @let selectedLayer = selectedResource.value();
     @if (selectedLayer) {
-      @if (selectedLayer.imageUrl && selectedLayer.imageUrl.hasValue()) {
-        <img
-          class="size-20 rounded-full object-cover"
-          [src]="selectedLayer.imageUrl.value()"
-          alt="Image of {{ selectedLayer.label?.value?.()?.name }}" />
+      @if (selectedLayer.image) {
+        <img class="size-20 rounded-full object-cover" [src]="selectedLayer.image" />
       }
 
       <table class="table-fixed text-sm text-left rtl:text-right text-gray-500">
@@ -30,7 +27,7 @@
           <th scope="col" class="px-6 py-3"></th>
         </thead>
         <tbody>
-          @for (row of selectedLayer.tableRows?.value(); track $index) {
+          @for (row of selectedLayer.rows; track $index) {
             @for (cell of row | keyvalue; track $index) {
               <tr class="px-6 py-4 font-medium whitespace-nowrap [&>*]:p-2 text-white">
                 <th>{{ cell.key }}</th>
@@ -42,4 +39,11 @@
       </table>
     }
   </main>
-</router-outlet>
+</div>
+<!-- 
+<form autocomplete>
+  <app-form-builder class="p-4 block" [form]="formService.form"></app-form-builder>
+  <pre>
+    {{ formService.form.value() | json }}
+  </pre>
+</form> -->

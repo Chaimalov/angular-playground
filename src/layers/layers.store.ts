@@ -1,6 +1,6 @@
 import { ApplicationRef, createEnvironmentInjector, DestroyRef, EnvironmentInjector, inject } from '@angular/core';
 import { patchState, signalStore, SignalStoreFeature, type, withMethods } from '@ngrx/signals';
-import { addEntity, removeEntity, withEntities } from '@ngrx/signals/entities';
+import { addEntity, removeEntity, setEntity, withEntities } from '@ngrx/signals/entities';
 import { RegisterMethod } from '../register';
 import { requiredFeatures, SetupFeatureResult } from './create-layer-model';
 import { LayerModel } from './layer-model.types';
@@ -99,13 +99,13 @@ export const LayerStore = signalStore(
         layerInjector.get(DestroyRef).onDestroy(() => {
           document.startViewTransition(() => {
             patchState(store, removeEntity(id, { collection: 'layers' }));
-            ref.tick();
+            ref.components[0].changeDetectorRef.detectChanges();
           });
         });
 
         document.startViewTransition(() => {
-          patchState(store, addEntity(layer, { collection: 'layers' }));
-          ref.tick();
+          patchState(store, setEntity(layer, { collection: 'layers' }));
+          ref.components[0].changeDetectorRef.detectChanges();
         });
       },
       removeLayer: (id: string) => {

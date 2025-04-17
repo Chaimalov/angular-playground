@@ -1,19 +1,22 @@
-import { KeyValuePipe } from '@angular/common';
+import { JsonPipe, KeyValuePipe } from '@angular/common';
 import { Component, inject, linkedSignal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { withMethods } from '@ngrx/signals';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { FormsModule } from '@angular/forms';
+import { combineLatest, map, of } from 'rxjs';
 import { v4 } from 'uuid';
+import { FormService } from '../forms/form.service';
 import { JokesLayer, Layer, LayerStore, UserLayer } from '../layers';
+import { FormBuilderComponent } from './form-builder.component';
 import { LabelComponent } from './label.component';
-import { Table } from '../store-features';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, KeyValuePipe, LabelComponent],
+  imports: [KeyValuePipe, LabelComponent, FormsModule, FormBuilderComponent, JsonPipe],
   templateUrl: './app.component.html',
 })
 export class AppComponent {
   protected store = inject(LayerStore);
+  public formService = inject(FormService);
 
   protected selected = linkedSignal({
     source: () => this.store.layersEntities()[0],
@@ -24,6 +27,7 @@ export class AppComponent {
       return source;
     },
   });
+
   protected layers = this.store.layersEntities;
 
   protected setSelected(layer: Layer): void {
@@ -32,9 +36,17 @@ export class AppComponent {
     });
   }
 
+  protected selectedResource = rxResource({
+    request: this.selected,
+    loader: ({ request }) =>
+      combineLatest([request.imageUrl ?? of(undefined), request.tableRows ?? of(undefined)]).pipe(
+        map(([image, rows]) => ({ image, rows }))
+      ),
+  });
+
   constructor() {
-    this.store.registerLayerModel('User', UserLayer());
-    this.store.registerLayerModel('Joke', JokesLayer());
+    this.store.registerLayerModel('User', UserLayer);
+    this.store.registerLayerModel('Joke', JokesLayer);
 
     Array.from({ length: 20 }).forEach((_, i) => {
       this.store.addLayer({

@@ -1,61 +1,57 @@
-import { resource } from '@angular/core';
 import { signalStoreFeature, SignalStoreFeatureResult, type, withProps } from '@ngrx/signals';
-import { Retrievable, resolveResource } from './utils';
+import { Observable, share } from 'rxjs';
 import { Store } from '../layers/create-layer-model';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { DestroyRef, inject } from '@angular/core';
 
 type Label = {
   name: string;
   color: string;
 };
 
-const LABEL_REF = Symbol('label');
-
-const withLabel = <Params extends SignalStoreFeatureResult>(
-  provider: (params: Store<Params>) => Retrievable<Label | undefined>
-) => {
+/**
+ * Creates a feature that adds a `label` property to the layer
+ * with the values returned from the provider.
+ *
+ * The provider function takes the store as an argument and must
+ * return an observable of `{ name: string, color: string }`.
+ *
+ * @example
+ *
+ * Visuals.withLabel(({ context }) => context.user.pipe(map((user) => ({ name: user.name, color: user.color }))))
+ */
+const withLabel = <Params extends SignalStoreFeatureResult>(provider: (params: Store<Params>) => Observable<Label>) => {
   return signalStoreFeature(
     type<Params>(),
     withProps(params => {
-      const labelResource = resource({
-        request: () => provider(params),
-        stream: resolveResource,
-      });
-
       return {
-        label: labelResource.asReadonly(),
-        [LABEL_REF]: labelResource,
+        label: provider(params),
       };
     })
   );
 };
 
 /**
- * Creates a feature that adds a `imageUrl` property to the store
+ * Creates a feature that adds a `imageUrl` property to the layer
  * with the values returned from the provider.
  *
  * The provider function takes the store as an argument and must
- * return an object with a `value` property of type `Retrievable<string | undefined>`.
- *
- * The feature will create a resource for the `imageUrl` property of the store,
- * and will add the resource as a property on the store.
+ * return an observable of string.
  *
  * @example
  *
- * Visuals.withImage(({ context }) => context.user.value()?.imageUrl)
+ * Visuals.withImage(({ context }) => context.user.pipe(map((user) => user.imageUrl)))
  */
 const withImage = <Params extends SignalStoreFeatureResult>(
-  provider: (params: Store<Params>) => Retrievable<string | undefined>
+  provider: (params: Store<Params>) => Observable<string>
 ) => {
   return signalStoreFeature(
     type<Params>(),
     withProps(params => {
-      const imageResource = resource({
-        request: () => provider(params),
-        stream: resolveResource,
-      });
+      const destroyRef = inject(DestroyRef);
 
       return {
-        imageUrl: imageResource.asReadonly(),
+        imageUrl: provider(params).pipe(share(), takeUntilDestroyed(destroyRef)),
       };
     })
   );

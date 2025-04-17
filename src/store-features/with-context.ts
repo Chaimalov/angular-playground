@@ -1,9 +1,10 @@
-import { Resource, resource, Signal } from '@angular/core';
+import { resource } from '@angular/core';
 import { signalStoreFeature, SignalStoreFeatureResult, type, withProps } from '@ngrx/signals';
-import { resolveResource, Retrievable } from './utils';
+import { Observable } from 'rxjs';
 import { Store } from '../layers/create-layer-model';
+import { resolveResource, Retrievable } from './utils';
 
-export type Context = Record<string, () => Retrievable<unknown>>;
+export type Context = Record<string, Observable<unknown>>;
 
 /**
  * @description
@@ -36,28 +37,12 @@ const withContext = <Params extends SignalStoreFeatureResult, TContext extends C
   return signalStoreFeature(
     type<Params>(),
     withProps(params => {
-      const providers = provider(params);
-
-      const context = Object.entries(providers).reduce((acc, [name, data]) => {
-        const contextResource = resource({
-          request: data,
-          stream: resolveResource,
-        });
-
-        return {
-          ...acc,
-          [name]: contextResource.asReadonly(),
-        };
-      }, {});
-
       return {
         context: {
           ...(params as any).context,
-          ...context,
+          ...provider(params),
         } as {
-          [K in keyof TContext]: ReturnType<
-            typeof resource<ReturnType<TContext[K]> extends Retrievable<infer T> ? T : never, unknown>
-          >;
+          [K in keyof TContext]: TContext[K];
         },
       };
     })
