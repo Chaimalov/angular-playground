@@ -6,12 +6,12 @@ import { combineLatest, map, of } from 'rxjs';
 import { v4 } from 'uuid';
 import { FormService } from '../forms/form.service';
 import { JokesLayer, Layer, LayerStore, UserLayer } from '../layers';
-import { FormBuilderComponent } from './form-builder.component';
+import { GenericFormComponent } from './generic-form.component';
 import { LabelComponent } from './label.component';
 
 @Component({
   selector: 'app-root',
-  imports: [KeyValuePipe, LabelComponent, FormsModule, FormBuilderComponent, JsonPipe],
+  imports: [KeyValuePipe, LabelComponent, FormsModule, GenericFormComponent, JsonPipe],
   templateUrl: './app.component.html',
 })
 export class AppComponent {

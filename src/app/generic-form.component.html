@@ -1,0 +1,88 @@
+@if (form().element.label) {
+  <legend>{{ form().element.label }}</legend>
+}
+
+@for (component of form().element.children | keyvalue: null; track component.key) {
+  @let control = form().field.controls[component.key];
+
+  @if (control.__type === 'FormGroup') {
+    @if (component.value.component === 'fieldset') {
+      <fieldset app-generic-form [form]="{ element: component.value, field: control }"></fieldset>
+    }
+  } @else {
+    @if (!control.hidden()) {
+      @switch (component.value.component) {
+        @case ('text') {
+          <label for="{{ component.key }}">{{ component.value.label }}</label>
+          <input
+            type="text"
+            [required]="control.hasError('required')"
+            [disabled]="control.disabled()"
+            [readonly]="control.readOnly()"
+            id="{{ component.key }}"
+            [placeholder]="component.value.placeholder"
+            ngModel
+            [formField]="control" />
+        }
+        @case ('textarea') {
+          <label for="{{ component.key }}">{{ component.value.label }}</label>
+          <textarea
+            id="{{ component.key }}"
+            [placeholder]="component.value.placeholder"
+            ngModel
+            [formField]="control"></textarea>
+        }
+        @case ('number') {
+          <label for="{{ component.key }}">{{ component.value.label }}</label>
+          <input
+            type="number"
+            id="{{ component.key }}"
+            [placeholder]="component.value.placeholder"
+            ngModel
+            [formField]="control" />
+        }
+        @case ('date') {
+          <label for="{{ component.key }}">{{ component.value.label }}</label>
+          <input
+            type="date"
+            id="{{ component.key }}"
+            [placeholder]="component.value.placeholder"
+            ngModel
+            [formField]="control" />
+        }
+        @case ('checkbox') {
+          <label>
+            <span>{{ component.value.label }}</span>
+            <input type="checkbox" ngModel [formField]="control" />
+          </label>
+        }
+        @case ('radio') {
+          <fieldset>
+            <legend>{{ component.value.label }}</legend>
+            @for (option of component.value.options?.values; track option) {
+              <label>
+                <span>{{ option }}</span>
+                <input
+                  type="radio"
+                  name="{{ component.key }}"
+                  [value]="option"
+                  [placeholder]="component.value.placeholder"
+                  ngModel
+                  [formField]="control" />
+              </label>
+            }
+          </fieldset>
+        }
+        @case ('select') {
+          <label for="{{ component.key }}">{{ component.value.label }}</label>
+          <select id="{{ component.key }}" ngModel [formField]="control">
+            @for (option of component.value.options?.values; track option) {
+              <option [value]="option">{{ option }}</option>
+            }
+          </select>
+        }
+      }
+    }
+  }
+}
+<ng-content />
