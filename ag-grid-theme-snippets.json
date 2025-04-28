@@ -1,0 +1,625 @@
+{
+  "version": 0.1,
+  "properties": [
+    {
+      "name": "--ag-accent-color",
+      "description": "The 'brand color' for the grid, used wherever a non-neutral color is required. Selections, focus outlines and checkboxes use the accent color by default."
+    },
+    {
+      "name": "--ag-advanced-filter-builder-button-bar-border",
+      "description": "Color of the dividing line above the buttons in the advanced filter builder"
+    },
+    {
+      "name": "--ag-advanced-filter-builder-column-pill-color",
+      "description": "Color of the column pills in the Advanced Filter Builder"
+    },
+    {
+      "name": "--ag-advanced-filter-builder-indent-size",
+      "description": "Amount that each level of the nesting in the advanced filter builder is indented by"
+    },
+    {
+      "name": "--ag-advanced-filter-builder-join-pill-color",
+      "description": "Color of the join operator pills in the Advanced Filter Builder"
+    },
+    {
+      "name": "--ag-advanced-filter-builder-option-pill-color",
+      "description": "Color of the filter option pills in the Advanced Filter Builder"
+    },
+    {
+      "name": "--ag-advanced-filter-builder-value-pill-color",
+      "description": "Color of the value pills in the Advanced Filter Builder"
+    },
+    {
+      "name": "--ag-background-color",
+      "description": "Background color of the grid. Many UI elements are semi-transparent, so their color blends with the background color."
+    },
+    {
+      "name": "--ag-border-color",
+      "description": "Default color for borders."
+    },
+    {
+      "name": "--ag-border-radius",
+      "description": "Default corner radius for many UI elements such as menus, dialogs and form widgets."
+    },
+    {
+      "name": "--ag-browser-color-scheme",
+      "description": "The CSS color-scheme to apply to the grid, which affects the default appearance of browser scrollbars form inputs unless these have been styled with CSS."
+    },
+    {
+      "name": "--ag-cell-horizontal-padding",
+      "description": "Padding at the start and end of grid cells and header cells."
+    },
+    {
+      "name": "--ag-cell-horizontal-padding-scale",
+      "description": "Multiply the cell horizontal padding by a number, e.g. 1.5 to increase by 50%"
+    },
+    {
+      "name": "--ag-cell-text-color",
+      "description": "Color of text in grid cells."
+    },
+    {
+      "name": "--ag-cell-widget-spacing",
+      "description": "Horizontal spacing between widgets inside cells (e.g. row group expand buttons and row selection checkboxes)."
+    },
+    {
+      "name": "--ag-chart-menu-label-color",
+      "description": "Color of form field labels within the chart editing panel for integrated charts"
+    },
+    {
+      "name": "--ag-chart-menu-panel-width",
+      "description": "Width of the chart editing panel for integrated charts"
+    },
+    {
+      "name": "--ag-chrome-background-color",
+      "description": "Background color for non-data areas of the grid. Headers, tool panels and menus use this color by default."
+    },
+    {
+      "name": "--ag-column-border",
+      "description": "Vertical borders between columns within the grid only, excluding headers."
+    },
+    {
+      "name": "--ag-column-drop-cell-background-color",
+      "description": "Background color of the pill shape representing columns in the column drop component"
+    },
+    {
+      "name": "--ag-column-drop-cell-text-color",
+      "description": "Text color for the pill shape representing columns in the column drop component"
+    },
+    {
+      "name": "--ag-column-drop-cell-drag-handle-color",
+      "description": "Color of the drag grip icon in the pill shape representing columns in the column drop component"
+    },
+    {
+      "name": "--ag-column-drop-cell-border",
+      "description": "Border for the pill shape representing columns in the column drop component"
+    },
+    {
+      "name": "--ag-column-hover-color",
+      "description": "Background color when hovering over columns in the grid. This is not visible unless enabled in the grid options."
+    },
+    {
+      "name": "--ag-column-select-indent-size",
+      "description": "Amount of indentation for each level of children when selecting grouped columns in the column select widget."
+    },
+    {
+      "name": "--ag-dialog-border",
+      "description": "Border color popup dialogs such as the integrated charts and the advanced filter builder."
+    },
+    {
+      "name": "--ag-dialog-shadow",
+      "description": "Shadow for popup dialogs such as the integrated charts and the advanced filter builder."
+    },
+    {
+      "name": "--ag-cell-editing-border",
+      "description": "Border around cells being edited"
+    },
+    {
+      "name": "--ag-cell-editing-shadow",
+      "description": "Shadow for cells being edited"
+    },
+    {
+      "name": "--ag-drag-and-drop-image-background-color",
+      "description": "Background color of the drag and drop image component element when dragging columns"
+    },
+    {
+      "name": "--ag-drag-and-drop-image-border",
+      "description": "Border color of the drag and drop image component element when dragging columns"
+    },
+    {
+      "name": "--ag-drag-and-drop-image-shadow",
+      "description": "Shadow for the drag and drop image component element when dragging columns"
+    },
+    {
+      "name": "--ag-drag-handle-color",
+      "description": "Color of the drag handle on draggable rows and column markers"
+    },
+    {
+      "name": "--ag-dropdown-shadow",
+      "description": "Default shadow for dropdown menus"
+    },
+    {
+      "name": "--ag-filter-tool-panel-group-indent",
+      "description": "How much to indent child columns in the filters tool panel relative to their parent"
+    },
+    {
+      "name": "--ag-find-match-color",
+      "description": "Color of matches used in Find"
+    },
+    {
+      "name": "--ag-find-match-background-color",
+      "description": "Background color of matches used in Find"
+    },
+    {
+      "name": "--ag-find-active-match-color",
+      "description": "Color of the active match used in Find"
+    },
+    {
+      "name": "--ag-find-active-match-background-color",
+      "description": "Background color of the active match used in Find"
+    },
+    {
+      "name": "--ag-focus-shadow",
+      "description": "Shadow around UI controls that have focus e.g. text inputs and buttons. The value must a valid CSS box-shadow."
+    },
+    {
+      "name": "--ag-font-family",
+      "description": "Default font family for all text. Can be overridden by more specific parameters like `headerFontFamily`"
+    },
+    {
+      "name": "--ag-font-size",
+      "description": "Default font size for text throughout the grid UI"
+    },
+    {
+      "name": "--ag-data-font-size",
+      "description": "Font size for data in grid rows"
+    },
+    {
+      "name": "--ag-footer-row-border",
+      "description": "Horizontal borders above footer components like the pagination and status bars"
+    },
+    {
+      "name": "--ag-foreground-color",
+      "description": "Default color for neutral UI elements. Most text, borders and backgrounds are defined as semi-transparent versions of this color, resulting in a blend between the background and foreground colours."
+    },
+    {
+      "name": "--ag-spacing",
+      "description": "Amount of spacing around and inside UI elements. All padding and margins in the grid are defined as a multiple of this value."
+    },
+    {
+      "name": "--ag-header-background-color",
+      "description": "Background color for header and header-like."
+    },
+    {
+      "name": "--ag-header-cell-background-transition-duration",
+      "description": "Duration in seconds of the background color transition if headerCellHoverBackgroundColor or headerCellMovingBackgroundColor is set."
+    },
+    {
+      "name": "--ag-header-cell-hover-background-color",
+      "description": "Background color of a header cell when hovering over it, or `transparent` for no change."
+    },
+    {
+      "name": "--ag-header-cell-moving-background-color",
+      "description": "Background color of a header cell when dragging to reposition it, or `transparent` for no change."
+    },
+    {
+      "name": "--ag-header-column-border",
+      "description": "Vertical borders between columns within headers."
+    },
+    {
+      "name": "--ag-header-column-border-height",
+      "description": "Height of the vertical border between column headers. Percentage values are relative to the header height."
+    },
+    {
+      "name": "--ag-header-column-resize-handle-color",
+      "description": "Color of the drag handle on resizable header columns. Set this to transparent to hide the resize handle."
+    },
+    {
+      "name": "--ag-header-column-resize-handle-height",
+      "description": "Height of the drag handle on resizable header columns. Percentage values are relative to the header height."
+    },
+    {
+      "name": "--ag-header-column-resize-handle-width",
+      "description": "Width of the drag handle on resizable header columns."
+    },
+    {
+      "name": "--ag-header-font-family",
+      "description": "Font family of text in the header"
+    },
+    {
+      "name": "--ag-cell-font-family",
+      "description": "Font family of text in grid cells"
+    },
+    {
+      "name": "--ag-header-font-size",
+      "description": "Size of text in the header"
+    },
+    {
+      "name": "--ag-header-font-weight",
+      "description": "Font weight of text in the header"
+    },
+    {
+      "name": "--ag-header-height",
+      "description": "Height of header rows. NOTE: by default this value is calculated to leave enough room for text, icons and padding. Most applications should leave it as is and use rowVerticalPaddingScale to change padding."
+    },
+    {
+      "name": "--ag-header-row-border",
+      "description": "Borders between and below header rows."
+    },
+    {
+      "name": "--ag-header-text-color",
+      "description": "Color of text in the header"
+    },
+    {
+      "name": "--ag-header-vertical-padding-scale",
+      "description": "Multiply the header vertical padding by a number, e.g. 1.5 to increase by 50%"
+    },
+    {
+      "name": "--ag-icon-color",
+      "description": "Color for icons, or `inherit` to take on the text color of the containing component"
+    },
+    {
+      "name": "--ag-icon-button-color",
+      "description": "Default color for clickable icons"
+    },
+    {
+      "name": "--ag-icon-button-background-color",
+      "description": "Default background color for clickable icons"
+    },
+    {
+      "name": "--ag-icon-button-background-spread",
+      "description": "The distance beyond the border of the clickable icons that the background extends to"
+    },
+    {
+      "name": "--ag-icon-button-border-radius",
+      "description": "Corner radius of clickable icon background"
+    },
+    {
+      "name": "--ag-icon-button-hover-color",
+      "description": "Color of clickable icons when hovered"
+    },
+    {
+      "name": "--ag-icon-button-hover-background-color",
+      "description": "Background color for clickable icons when hovered"
+    },
+    {
+      "name": "--ag-icon-button-active-color",
+      "description": "Color of clickable icon buttons when styled as active. This is used for the column filter button when a filter is applied to the column."
+    },
+    {
+      "name": "--ag-icon-button-active-background-color",
+      "description": "Background color of clickable icon buttons when styled as active. This is used for the column filter button when a filter is applied to the column."
+    },
+    {
+      "name": "--ag-icon-button-active-indicator-color",
+      "description": "Color of the marker dot shown on icon buttons when styled as active. This is used for the column filter button when a filter is applied to the column."
+    },
+    {
+      "name": "--ag-icon-size",
+      "description": "The size of square icons and icon-buttons"
+    },
+    {
+      "name": "--ag-invalid-color",
+      "description": "The color for inputs and UI controls in an invalid state."
+    },
+    {
+      "name": "--ag-list-item-height",
+      "description": "Height of items in scrolling lists e.g. dropdown select inputs and column menu set filters."
+    },
+    {
+      "name": "--ag-menu-background-color",
+      "description": "Background color for menus e.g. column menu and right-click context menu"
+    },
+    {
+      "name": "--ag-menu-border",
+      "description": "Border around menus e.g. column menu and right-click context menu"
+    },
+    {
+      "name": "--ag-menu-separator-color",
+      "description": "Color of the dividing line between sections of menus e.g. column menu and right-click context menu"
+    },
+    {
+      "name": "--ag-menu-shadow",
+      "description": "Shadow for menus e.g. column menu and right-click context menu"
+    },
+    {
+      "name": "--ag-menu-text-color",
+      "description": "Text color for menus e.g. column menu and right-click context menu"
+    },
+    {
+      "name": "--ag-modal-overlay-background-color",
+      "description": "Background color of the overlay shown over the grid e.g. a data loading indicator."
+    },
+    {
+      "name": "--ag-odd-row-background-color",
+      "description": "Background color applied to every other row"
+    },
+    {
+      "name": "--ag-panel-background-color",
+      "description": "Background color for panels and dialogs such as the integrated charts and the advanced filter builder."
+    },
+    {
+      "name": "--ag-panel-title-bar-background-color",
+      "description": "Background color for the title bar of panels and dialogs such as the integrated charts and the advanced filter builder."
+    },
+    {
+      "name": "--ag-panel-title-bar-text-color",
+      "description": "Text color for the title bar of panels and dialogs such as the integrated charts and the advanced filter builder."
+    },
+    {
+      "name": "--ag-panel-title-bar-icon-color",
+      "description": "Icon color for the title bar of panels and dialogs such as the integrated charts and the advanced filter builder."
+    },
+    {
+      "name": "--ag-panel-title-bar-font-weight",
+      "description": "Font weight for the title bar of panels and dialogs such as the integrated charts and the advanced filter builder."
+    },
+    {
+      "name": "--ag-panel-title-bar-border",
+      "description": "Border below the title bar of panels and dialogs such as the integrated charts and the advanced filter builder."
+    },
+    {
+      "name": "--ag-pinned-column-border",
+      "description": "Vertical borders between columns that are pinned to the left or right and the rest of the grid"
+    },
+    {
+      "name": "--ag-pinned-row-border",
+      "description": "Horizontal borders between the grid and rows that are pinned to the top or bottom and the rest of the grid"
+    },
+    {
+      "name": "--ag-popup-shadow",
+      "description": "Default shadow for elements that float above the grid and are intended to appear separated from it e.g. dialogs and menus"
+    },
+    {
+      "name": "--ag-card-shadow",
+      "description": "Default shadow for elements that float above the grid and are intended to appear elevated byt still attached e.g. dropdowns and cell editors"
+    },
+    {
+      "name": "--ag-range-selection-background-color",
+      "description": "Background color of selected cell ranges. Choosing a semi-transparent color ensure that multiple overlapping ranges look correct."
+    },
+    {
+      "name": "--ag-range-selection-border-color",
+      "description": "The color used for borders around range selections. The selection background defaults to a semi-transparent version of this color."
+    },
+    {
+      "name": "--ag-range-selection-border-style",
+      "description": "Border style around range selections."
+    },
+    {
+      "name": "--ag-range-selection-chart-background-color",
+      "description": "Background color for cells that provide data to the current range chart"
+    },
+    {
+      "name": "--ag-range-selection-chart-category-background-color",
+      "description": "Background color for cells that provide categories to the current range chart"
+    },
+    {
+      "name": "--ag-range-selection-highlight-color",
+      "description": "Background color to briefly apply to a cell range when the user copies from or pastes into it."
+    },
+    {
+      "name": "--ag-range-header-highlight-color",
+      "description": "Background color of the grid header when any cell of that header is part of a range. This is not visible unless enabled in the cell selection options."
+    },
+    {
+      "name": "--ag-row-numbers-selected-color",
+      "description": "Background color of the Row Numbers cells when the range selects all cells for that row."
+    },
+    {
+      "name": "--ag-row-border",
+      "description": "Horizontal borders between rows."
+    },
+    {
+      "name": "--ag-row-group-indent-size",
+      "description": "The size of indentation applied to each level of row grouping - deep rows are indented by a multiple of this value."
+    },
+    {
+      "name": "--ag-row-height",
+      "description": "Height of grid rows. NOTE: by default this value is calculated to leave enough room for text, icons and padding. Most applications should leave it as is and use rowVerticalPaddingScale to change padding."
+    },
+    {
+      "name": "--ag-row-hover-color",
+      "description": "Background color when hovering over rows in the grid and in dropdown menus. Set to `transparent` to disable the hover effect. Note: if you want a hover effect on one but not the other, use CSS selectors instead of this property."
+    },
+    {
+      "name": "--ag-row-loading-skeleton-effect-color",
+      "description": "Color of the skeleton loading effect used when loading row data with the Server-side Row Model"
+    },
+    {
+      "name": "--ag-row-vertical-padding-scale",
+      "description": "Multiply the row vertical padding by a number, e.g. 1.5 to increase by 50%. Has no effect if rowHeight is set."
+    },
+    {
+      "name": "--ag-select-cell-background-color",
+      "description": "Background color for selected items within the multiple select widget"
+    },
+    {
+      "name": "--ag-select-cell-border",
+      "description": "Border for selected items within the multiple select widget"
+    },
+    {
+      "name": "--ag-selected-row-background-color",
+      "description": "Background color of selected rows in the grid and in dropdown menus."
+    },
+    {
+      "name": "--ag-set-filter-indent-size",
+      "description": "Amount of indentation for each level of child items in the Set Filter list when filtering tree data."
+    },
+    {
+      "name": "--ag-side-bar-background-color",
+      "description": "Background color of the sidebar that contains the columns and filters tool panels"
+    },
+    {
+      "name": "--ag-side-button-bar-background-color",
+      "description": "Background color of the row of tab buttons at the edge of the sidebar"
+    },
+    {
+      "name": "--ag-side-bar-panel-width",
+      "description": "Default width of the sidebar that contains the columns and filters tool panels"
+    },
+    {
+      "name": "--ag-side-panel-border",
+      "description": "Borders between the grid and side panels including the column and filter tool bars, and chart settings"
+    },
+    {
+      "name": "--ag-side-button-bar-top-padding",
+      "description": "Spacing between the topmost side button and the top of the sidebar"
+    },
+    {
+      "name": "--ag-side-button-selected-underline-width",
+      "description": "Width of the underline below the selected tab in the sidebar"
+    },
+    {
+      "name": "--ag-side-button-selected-underline-color",
+      "description": "Color of the underline below the selected tab in the sidebar, or 'transparent' to disable the underline effect"
+    },
+    {
+      "name": "--ag-side-button-selected-underline-transition-duration",
+      "description": "Duration of the transition effect for the underline below the selected tab in the sidebar"
+    },
+    {
+      "name": "--ag-side-button-background-color",
+      "description": "Background color of the tab buttons in the sidebar"
+    },
+    {
+      "name": "--ag-side-button-text-color",
+      "description": "Text color of the tab buttons in the sidebar"
+    },
+    {
+      "name": "--ag-side-button-hover-background-color",
+      "description": "Background color of the tab buttons in the sidebar when hovered"
+    },
+    {
+      "name": "--ag-side-button-hover-text-color",
+      "description": "Text color of the tab buttons in the sidebar when hovered"
+    },
+    {
+      "name": "--ag-side-button-selected-background-color",
+      "description": "Background color of the selected tab button in the sidebar"
+    },
+    {
+      "name": "--ag-side-button-selected-text-color",
+      "description": "Text color of the selected tab button in the sidebar"
+    },
+    {
+      "name": "--ag-side-button-border",
+      "description": "Border drawn above and below tab buttons in the sidebar"
+    },
+    {
+      "name": "--ag-side-button-selected-border",
+      "description": "Border drawn above and below the selected tab button in the sidebar"
+    },
+    {
+      "name": "--ag-side-button-left-padding",
+      "description": "Padding to the left of the text in tab buttons in the sidebar (this is always the padding on the inward facing side of the button, so in right-to-left layout it will be on the right)"
+    },
+    {
+      "name": "--ag-side-button-right-padding",
+      "description": "Padding to the right of the text in tab buttons in the sidebar (this is always the padding on the outward facing side of the button, so in right-to-left layout it will be on the left)"
+    },
+    {
+      "name": "--ag-side-button-vertical-padding",
+      "description": "Padding above and below the text in tab buttons in the sidebar"
+    },
+    {
+      "name": "--ag-subtle-text-color",
+      "description": "Color of text and UI elements that should stand out less than the default."
+    },
+    {
+      "name": "--ag-text-color",
+      "description": "Default color for all text"
+    },
+    {
+      "name": "--ag-toggle-button-width",
+      "description": "Width of the whole toggle button component"
+    },
+    {
+      "name": "--ag-toggle-button-height",
+      "description": "Height of the whole toggle button component"
+    },
+    {
+      "name": "--ag-toggle-button-off-background-color",
+      "description": "Color of the toggle button background in its 'off' state"
+    },
+    {
+      "name": "--ag-toggle-button-on-background-color",
+      "description": "Color of the toggle button background in its 'on' state"
+    },
+    {
+      "name": "--ag-toggle-button-switch-background-color",
+      "description": "Background color of the toggle button switch (the bit that slides from left to right)"
+    },
+    {
+      "name": "--ag-toggle-button-switch-inset",
+      "description": "The amount that the toggle switch is inset from the edge of the button"
+    },
+    {
+      "name": "--ag-tool-panel-separator-border",
+      "description": "The dividing line between sections of menus e.g. column menu and right-click context menu"
+    },
+    {
+      "name": "--ag-tooltip-background-color",
+      "description": "Background color for tooltips"
+    },
+    {
+      "name": "--ag-tooltip-border",
+      "description": "Border for tooltips"
+    },
+    {
+      "name": "--ag-tooltip-text-color",
+      "description": "Text color for tooltips"
+    },
+    {
+      "name": "--ag-value-change-delta-down-color",
+      "description": "Color to temporarily apply to cell data when its value decreases in an agAnimateShowChangeCellRenderer cell"
+    },
+    {
+      "name": "--ag-value-change-delta-up-color",
+      "description": "Color to temporarily apply to cell data when its value increases in an agAnimateShowChangeCellRenderer cell"
+    },
+    {
+      "name": "--ag-value-change-value-highlight-background-color",
+      "description": "Background color to apply when a cell value changes and enableCellChangeFlash is enabled"
+    },
+    {
+      "name": "--ag-widget-container-horizontal-padding",
+      "description": "The horizontal padding of containers that contain stacked widgets, such as menus and tool panels"
+    },
+    {
+      "name": "--ag-widget-container-vertical-padding",
+      "description": "The vertical padding of containers that contain stacked widgets, such as menus and tool panels"
+    },
+    {
+      "name": "--ag-widget-horizontal-spacing",
+      "description": "The spacing between widgets in containers arrange widgets horizontally"
+    },
+    {
+      "name": "--ag-widget-vertical-spacing",
+      "description": "The spacing between widgets in containers arrange widgets vertically"
+    },
+    {
+      "name": "--ag-wrapper-border",
+      "description": "Borders around the outside of the grid"
+    },
+    {
+      "name": "--ag-wrapper-border-radius",
+      "description": "Corner radius of the outermost container around the grid."
+    },
+    {
+      "name": "--ag-status-bar-label-color",
+      "description": "Text color for labels in the status bar component"
+    },
+    {
+      "name": "--ag-status-bar-label-font-weight",
+      "description": "Font weight for labels in the status bar component"
+    },
+    {
+      "name": "--ag-status-bar-value-color",
+      "description": "Text color for values in the status bar component"
+    },
+    {
+      "name": "--ag-status-bar-value-font-weight",
+      "description": "Font weight for values in the status bar component"
+    }
+  ]
+}
