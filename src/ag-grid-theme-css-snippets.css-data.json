@@ -1,0 +1,874 @@
+{
+  "version": 1.1,
+  "properties": [
+    {
+      "name": "--ag-active-color",
+      "description": {
+        "kind": "markdown",
+        "value": "(Quartz theme only) accent color used for checked checkboxes, range selections, and input focus outlines in the Quartz theme.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-alpine-active-color",
+      "description": {
+        "kind": "markdown",
+        "value": "(Alpine theme only) accent color used for checked checkboxes, range selections, row hover, row selections, selected tab underlines, and input focus outlines in the Alpine theme.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-balham-active-color",
+      "description": {
+        "kind": "markdown",
+        "value": "(Balham theme only) accent color used for checked checkboxes, range selections, row selections, and input focus outlines in the Balham theme.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-material-primary-color",
+      "description": {
+        "kind": "markdown",
+        "value": "(Material theme only) the primary color as defined in the Material Design color system. Currently this is used on buttons, range selections and selected tab underlines in the Material theme.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-material-accent-color",
+      "description": {
+        "kind": "markdown",
+        "value": "(Material theme only) the accent color as defined in the Material Design color system. Currently this is used on checked checkboxes in the Material theme.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-foreground-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Color of text and icons in primary UI elements like menus.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-background-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Background color of the grid.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-secondary-foreground-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Color of text and icons in UI elements that need to be slightly less emphasised to avoid distracting attention from data.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-data-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Color of text in grid cells.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-header-foreground-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Color of text and icons in the header.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-header-background-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Background color for all headers, including the grid header, panels etc.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-tooltip-background-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Background color for all tooltips.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-disabled-foreground-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Color of elements that can't be interacted with because they are in a disabled state.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-subheader-background-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Background color for second level headings within UI components.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-subheader-toolbar-background-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Background color for toolbars directly under subheadings (as used in the chart settings menu).\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-control-panel-background-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Background for areas of the interface that contain UI controls, like tool panels and the chart settings menu.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-side-button-selected-background-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Background for the active tab on the side of the control panel.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-selected-row-background-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Background color of selected rows in the grid and in dropdown menus.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-odd-row-background-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Background color applied to every other row.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-modal-overlay-background-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Background color of the overlay shown over the grid e.g. a data loading indicator.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-menu-background-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Background color of menus, including the column menu and right-click context menu.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-panel-background-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Background color of panels, including the advanced filter builder and integrated charts.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-row-hover-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Background color when hovering over rows in the grid and in dropdown menus. Set to transparent to disable the hover effect. Note: if you want a rollover on one but not the other, use CSS selectors instead of this property.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-column-hover-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Background color when hovering over columns in the grid.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-range-selection-border-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Color to draw around selected cell ranges.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-range-selection-border-style",
+      "description": {
+        "kind": "markdown",
+        "value": "Border style for range selections, e.g. solid or dashed. Do not set to none, if you need to hide the border set the color to transparent.\n\na CSS border style (e.g. `dotted`, `solid` or `none`)"
+      }
+    },
+    {
+      "name": "--ag-range-selection-background-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Background color of selected cell ranges..\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-range-selection-background-color-2",
+      "description": {
+        "kind": "markdown",
+        "value": "Background-color when 2 selected ranges overlap. Hint: for a realistic appearance of multiple semi-transparent colors overlaying, set the opacity to 1-((1-X)^2) where X is the opacity of --ag-range-selection-background-color.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-range-selection-background-color-3",
+      "description": {
+        "kind": "markdown",
+        "value": "Background-color when 3 selected ranges overlap. Hint: for a realistic appearance of multiple semi-transparent colors overlaying, set the opacity to 1-((1-X)^3) where X is the opacity of --ag-range-selection-background-color.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-range-selection-background-color-4",
+      "description": {
+        "kind": "markdown",
+        "value": "Background-color when 4 or more selected ranges overlap. Hint: for a realistic appearance of multiple semi-transparent colors overlaying, set the opacity to 1-((1-X)^4) where X is the opacity of --ag-range-selection-background-color.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-range-selection-highlight-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Background color to briefly apply to a cell range when it is copied from or pasted into.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-range-header-highlight-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Background color of the grid header when any cell of that header is part of a range. This is not visible unless enabled in the cell selection options..\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-selected-tab-underline-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Color of the border drawn under selected tabs.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-selected-tab-underline-width",
+      "description": {
+        "kind": "markdown",
+        "value": "Thickness of the border drawn under selected tabs.\n\n CSS length (e.g. `0`, `4px` or `50%`)"
+      }
+    },
+    {
+      "name": "--ag-selected-tab-underline-transition-speed",
+      "description": {
+        "kind": "markdown",
+        "value": "Duration of animation used to show and hide the border drawn under selected tabs.\n\n CSS time duration (e.g. `3s` or `250ms`)"
+      }
+    },
+    {
+      "name": "--ag-range-selection-chart-category-background-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Background color for cells that provide categories to the current range chart.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-range-selection-chart-background-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Background color for cells that provide data to the current range chart.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-header-cell-hover-background-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Rollover color for header cells. If you set this variable and have enabled column reordering by dragging, you may want to set --ag-header-cell-moving-background-color to ensure that the rollover color remains in place during dragging..\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-header-cell-moving-background-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Color applied to header cells when the column is being dragged to a new position.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-value-change-value-highlight-background-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Color to apply when a cell value changes and enableCellChangeFlash is enabled.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-value-change-delta-up-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Color to temporarily apply to cell data when its value increases in an agAnimateShowChangeCellRenderer cell.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-value-change-delta-down-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Color to temporarily apply to cell data when its value decreases in an agAnimateShowChangeCellRenderer cell.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-chip-background-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Color for the 'chip' that represents a column that has been dragged onto a drop zone.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-borders",
+      "description": {
+        "kind": "markdown",
+        "value": "Enable or disable borders around most UI elements in the grid. Set this to a border style and thickness, e.g. solid 1px to enable borders, or none to disable borders. Use the other --ag-borders-* variables for more fine grained control over which UI elements get borders.\n\na CSS border style and size (e.g. `solid 1px` or `none`)"
+      }
+    },
+    {
+      "name": "--ag-border-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Color for border around major UI components like the grid itself, headers; footers and tool panels..\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-borders-critical",
+      "description": {
+        "kind": "markdown",
+        "value": "Enable or disable borders that are critical to UX, e.g. those between headers and rows. Themes that disable borders generally may want to enable these borders. Set this to a border style and thickness, e.g. solid 1px to enable borders, or none to disable borders.\n\na CSS border style and size (e.g. `solid 1px` or `none`)"
+      }
+    },
+    {
+      "name": "--ag-borders-secondary",
+      "description": {
+        "kind": "markdown",
+        "value": "Draw decorative borders separating UI elements within components. Set this to a border style and thickness, e.g. solid 1px to enable borders, or none to disable borders.\n\na CSS border style and size (e.g. `solid 1px` or `none`)"
+      }
+    },
+    {
+      "name": "--ag-secondary-border-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Color for borders used to separate elements within a major UI component.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-row-border-style",
+      "description": {
+        "kind": "markdown",
+        "value": "Default border style for the grid rows. Set this to a border style, e.g. solid, dotted.\n\na CSS border style (e.g. `solid` or `dotted`)"
+      }
+    },
+    {
+      "name": "--ag-row-border-width",
+      "description": {
+        "kind": "markdown",
+        "value": "The thickness of the border between grid rows. Set this to a border thickness, e.g. 1px.\n\na CSS border style (e.g. `solid` or `dotted`)"
+      }
+    },
+    {
+      "name": "--ag-row-border-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Color of the border between grid rows, or transparent to display no border.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-row-numbers-selected-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Background color of the Row Numbers cells when the range selects all cells for that row..\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-menu-border-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Color of the border around menus including the column menu and right-click context menu.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-panel-border-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Color of the border around panels including the advanced filter builder and integrated charts.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-cell-horizontal-border",
+      "description": {
+        "kind": "markdown",
+        "value": "Default border for cells. This can be used to specify the border-style and border-color properties e.g. dashed red but the border-width is fixed at 1px. Set to solid transparent to show no border.\n\na CSS border style and color (e.g. `solid red`)"
+      }
+    },
+    {
+      "name": "--ag-borders-input",
+      "description": {
+        "kind": "markdown",
+        "value": "Draw borders around inputs. Set this to a border style and thickness, e.g. solid 1px to enable borders, or none to disable borders.\n\na CSS border style and size (e.g. `solid 1px` or `none`)"
+      }
+    },
+    {
+      "name": "--ag-input-border-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Color for borders around inputs, if enabled with --ag-borders-input.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-borders-input-invalid",
+      "description": {
+        "kind": "markdown",
+        "value": "Draw borders around inputs when their content has failed validation. Set this to a border style and thickness, e.g. solid 2px to enable borders. Set to none to disable borders but ensure that you have added styles to differentiate invalid from valid inputs.\n\n a CSS border style and size (e.g. `solid 1px` or `none`)"
+      }
+    },
+    {
+      "name": "--ag-input-border-color-invalid",
+      "description": {
+        "kind": "markdown",
+        "value": "The color for the border around invalid inputs, if enabled with --ag-borders-input-invalid.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-borders-side-button",
+      "description": {
+        "kind": "markdown",
+        "value": "Draw borders around the vertical tabs on the side of the control panel. Set this to a border style and thickness, e.g. solid 1px to enable borders, or none to disable borders.\n\na CSS border style and size (e.g. `solid 1px` or `none`)"
+      }
+    },
+    {
+      "name": "--ag-border-radius",
+      "description": {
+        "kind": "markdown",
+        "value": "Border radius applied to many elements such as dialogs and form widgets.\n\n CSS length (e.g. `0`, `4px` or `50%`)"
+      }
+    },
+    {
+      "name": "--ag-invalid-color",
+      "description": {
+        "kind": "markdown",
+        "value": "The color applied to form elements in an invalid state.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-input-disabled-border-color",
+      "description": {
+        "kind": "markdown",
+        "value": "The border around disabled text inputs.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-input-disabled-background-color",
+      "description": {
+        "kind": "markdown",
+        "value": "The background color of disabled text inputs.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-checkbox-background-color",
+      "description": {
+        "kind": "markdown",
+        "value": "the background of an checkbox.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-checkbox-border-radius",
+      "description": {
+        "kind": "markdown",
+        "value": "edge rounding a checkboxes.\n\n CSS length (e.g. `0`, `4px` or `50%`)"
+      }
+    },
+    {
+      "name": "--ag-checkbox-checked-color",
+      "description": {
+        "kind": "markdown",
+        "value": "color of the checkbox-checked icon that is shown in a checked checkbox.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-checkbox-unchecked-color",
+      "description": {
+        "kind": "markdown",
+        "value": "color of the checkbox-unchecked icon that is shown in an unchecked checkbox.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-checkbox-indeterminate-color",
+      "description": {
+        "kind": "markdown",
+        "value": "color of the checkbox-indeterminate icon that is shown in an indeterminate checkbox.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-toggle-button-border-width",
+      "description": {
+        "kind": "markdown",
+        "value": "size of the toggle button outer border.\n\n CSS length (e.g. `0`, `4px` or `50%`)"
+      }
+    },
+    {
+      "name": "--ag-toggle-button-on-border-color",
+      "description": {
+        "kind": "markdown",
+        "value": "color of the toggle button outer border in its 'on' state.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-toggle-button-off-border-color",
+      "description": {
+        "kind": "markdown",
+        "value": "color of the toggle button's outer border in its 'off' state.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-toggle-button-on-background-color",
+      "description": {
+        "kind": "markdown",
+        "value": "color of the toggle button background in its 'on' state.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-toggle-button-off-background-color",
+      "description": {
+        "kind": "markdown",
+        "value": "color of the toggle button background in its 'off' state.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-toggle-button-switch-background-color",
+      "description": {
+        "kind": "markdown",
+        "value": "color of the toggle button switch (the bit that slides from left to right).\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-toggle-button-switch-border-color",
+      "description": {
+        "kind": "markdown",
+        "value": "border color of the toggle button switch (the bit that slides from left to right).\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-toggle-button-width",
+      "description": {
+        "kind": "markdown",
+        "value": "width of the whole toggle button component.\n\n CSS length (e.g. `0`, `4px` or `50%`)"
+      }
+    },
+    {
+      "name": "--ag-toggle-button-height",
+      "description": {
+        "kind": "markdown",
+        "value": "height of the whole toggle button component.\n\n CSS length (e.g. `0`, `4px` or `50%`)"
+      }
+    },
+    {
+      "name": "--ag-input-focus-box-shadow",
+      "description": {
+        "kind": "markdown",
+        "value": "box shadow around focussed inputs.\n\n CSS box-shadow value (e.g. `0 5px 10px black`)"
+      }
+    },
+    {
+      "name": "--ag-input-focus-border-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Color of the border around focussed inputs. Set to var(--ag-input-border-color) if you do not want to change the border color on focus..\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-minichart-selected-chart-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Color of border around selected chart style.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-minichart-selected-page-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Color of dot representing selected page of chart styles.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-grid-size",
+      "description": {
+        "kind": "markdown",
+        "value": "grid-size is the main control for affecting how tightly data and UI elements are packed together. All padding and spacing in the grid is defined as a multiple of grid-size, so increasing it will make most components larger by increasing their internal white space while leaving the size of text and icons unchanged..\n\n CSS length (e.g. `0`, `4px` or `50%`)"
+      }
+    },
+    {
+      "name": "--ag-icon-size",
+      "description": {
+        "kind": "markdown",
+        "value": "The size of square icons and icon-buttons.\n\n CSS length (e.g. `0`, `4px` or `50%`)"
+      }
+    },
+    {
+      "name": "--ag-icon-font-weight",
+      "description": {
+        "kind": "markdown",
+        "value": "The font weight to apply to icon elements, used for icon fonts that require a specific weight to work.\n\n CSS length (e.g. `0`, `4px` or `50%`)"
+      }
+    },
+    {
+      "name": "--ag-widget-container-horizontal-padding",
+      "description": {
+        "kind": "markdown",
+        "value": "The horizontal padding of containers that contain stacked widgets, such as menus and tool panels.\n\n CSS length (e.g. `0`, `4px` or `50%`)"
+      }
+    },
+    {
+      "name": "--ag-widget-container-vertical-padding",
+      "description": {
+        "kind": "markdown",
+        "value": "The vertical padding of containers that contain stacked widgets, such as menus and tool panels.\n\n CSS length (e.g. `0`, `4px` or `50%`)"
+      }
+    },
+    {
+      "name": "--ag-widget-horizontal-spacing",
+      "description": {
+        "kind": "markdown",
+        "value": "The horizontal spacing between widgets in containers that contain horizontally stacked widgets such as the column groups header component..\n\n CSS length (e.g. `0`, `4px` or `50%`)"
+      }
+    },
+    {
+      "name": "--ag-widget-vertical-spacing",
+      "description": {
+        "kind": "markdown",
+        "value": "The vertical spacing between widgets in containers that contain vertically stacked widgets.\n\n CSS length (e.g. `0`, `4px` or `50%`)"
+      }
+    },
+    {
+      "name": "--ag-cell-horizontal-padding",
+      "description": {
+        "kind": "markdown",
+        "value": "Horizontal padding for grid and header cells (vertical padding is not set explicitly, but inferred from row-height / header-height.\n\n CSS length (e.g. `0`, `4px` or `50%`)"
+      }
+    },
+    {
+      "name": "--ag-cell-widget-spacing",
+      "description": {
+        "kind": "markdown",
+        "value": "Horizontal spacing between widgets inside cells (e.g. row group expand buttons and row selection checkboxes).\n\n CSS length (e.g. `0`, `4px` or `50%`)"
+      }
+    },
+    {
+      "name": "--ag-row-height",
+      "description": { "kind": "markdown", "value": "Height of grid rows.\n\n CSS length (e.g. `0`, `4px` or `50%`)" }
+    },
+    {
+      "name": "--ag-header-height",
+      "description": { "kind": "markdown", "value": "Height of header rows.\n\n CSS length (e.g. `0`, `4px` or `50%`)" }
+    },
+    {
+      "name": "--ag-list-item-height",
+      "description": {
+        "kind": "markdown",
+        "value": "Height of items in lists (example of lists are dropdown select inputs and column menu set filters).\n\n CSS length (e.g. `0`, `4px` or `50%`)"
+      }
+    },
+    {
+      "name": "--ag-header-column-separator-display",
+      "description": {
+        "kind": "markdown",
+        "value": "Whether to display the header column separator - a vertical line that displays between every header cell.\n\n CSS display value - `block` to show or `none` to hide"
+      }
+    },
+    {
+      "name": "--ag-header-column-separator-height",
+      "description": {
+        "kind": "markdown",
+        "value": "Height of the header column separator. Percentage values are relative to the header height..\n\n CSS length (e.g. `0`, `4px` or `50%`)"
+      }
+    },
+    {
+      "name": "--ag-header-column-separator-width",
+      "description": {
+        "kind": "markdown",
+        "value": "Width of the header column separator.\n\n CSS length (e.g. `0`, `4px` or `50%`)"
+      }
+    },
+    {
+      "name": "--ag-header-column-separator-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Color of the header column separator.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-header-column-resize-handle-display",
+      "description": {
+        "kind": "markdown",
+        "value": "Whether to show the header column resize handle - a vertical line that displays only between resizeable header columns, indicating where to drag in order to resize the column..\n\n CSS display value - `block` to show or `none` to hide"
+      }
+    },
+    {
+      "name": "--ag-header-column-resize-handle-height",
+      "description": {
+        "kind": "markdown",
+        "value": "Height of the header resize handle. Percentage values are relative to the header height..\n\n CSS length (e.g. `0`, `4px` or `50%`)"
+      }
+    },
+    {
+      "name": "--ag-header-column-resize-handle-width",
+      "description": {
+        "kind": "markdown",
+        "value": "Width of the header resize handle..\n\n CSS length (e.g. `0`, `4px` or `50%`)"
+      }
+    },
+    {
+      "name": "--ag-header-column-resize-handle-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Color of the header resize handle.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-column-select-indent-size",
+      "description": {
+        "kind": "markdown",
+        "value": "How much to indent child columns in the column tool panel relative to their parent.\n\n CSS length (e.g. `0`, `4px` or `50%`)"
+      }
+    },
+    {
+      "name": "--ag-set-filter-indent-size",
+      "description": {
+        "kind": "markdown",
+        "value": "How much to indent child filter items in the Set Filter List relative to their parent.\n\n CSS length (e.g. `0`, `4px` or `50%`)"
+      }
+    },
+    {
+      "name": "--ag-advanced-filter-builder-indent-size",
+      "description": {
+        "kind": "markdown",
+        "value": "How much to indent child filter items in the Advanced Filter Builder relative to their parent.\n\n CSS length (e.g. `0`, `4px` or `50%`)"
+      }
+    },
+    {
+      "name": "--ag-row-group-indent-size",
+      "description": {
+        "kind": "markdown",
+        "value": "How much to indent child rows in the grid relative to their parent row.\n\n CSS length (e.g. `0`, `4px` or `50%`)"
+      }
+    },
+    {
+      "name": "--ag-filter-tool-panel-group-indent",
+      "description": {
+        "kind": "markdown",
+        "value": "How much to indent child columns in the filters tool panel relative to their parent.\n\n CSS length (e.g. `0`, `4px` or `50%`)"
+      }
+    },
+    {
+      "name": "--ag-tab-min-width",
+      "description": {
+        "kind": "markdown",
+        "value": "Minimum width of the legacy tabbed column menu. Set this to the largest content you expect to be displayed in the tabbed menu to prevent the menu from changing size as you switch between tabs..\n\n CSS length (e.g. `0`, `4px` or `50%`)"
+      }
+    },
+    {
+      "name": "--ag-menu-min-width",
+      "description": {
+        "kind": "markdown",
+        "value": "Minimum width of the filter menu.\n\n CSS length (e.g. `0`, `4px` or `50%`)"
+      }
+    },
+    {
+      "name": "--ag-side-bar-panel-width",
+      "description": {
+        "kind": "markdown",
+        "value": "Width of the sidebar that contains the columns and filters tool panels.\n\n CSS length (e.g. `0`, `4px` or `50%`)"
+      }
+    },
+    {
+      "name": "--ag-font-family",
+      "description": {
+        "kind": "markdown",
+        "value": "Font family used for all text.\n\n CSS font-family value (e.g. `font-family: `'Gill Sans', sans-serif`)"
+      }
+    },
+    {
+      "name": "--ag-font-size",
+      "description": {
+        "kind": "markdown",
+        "value": "Default font size for text in the grid.\n\n CSS length (e.g. `0`, `4px` or `50%`)"
+      }
+    },
+    {
+      "name": "--ag-icon-font-family",
+      "description": {
+        "kind": "markdown",
+        "value": "The icon font used by the grid..\n\n CSS length (e.g. `0`, `4px` or `50%`)"
+      }
+    },
+    {
+      "name": "--ag-card-radius",
+      "description": {
+        "kind": "markdown",
+        "value": "cards are elements that float above the UI.\n\n CSS length (e.g. `0`, `4px` or `50%`)"
+      }
+    },
+    {
+      "name": "--ag-card-shadow",
+      "description": {
+        "kind": "markdown",
+        "value": "the default card shadow applies to simple cards like column drag indicators and text editors.\n\n CSS box-shadow value (e.g. `0 5px 10px black`)"
+      }
+    },
+    {
+      "name": "--ag-popup-shadow",
+      "description": {
+        "kind": "markdown",
+        "value": "override the shadow for popups - cards that contain complex UI, like menus and charts.\n\n CSS box-shadow value (e.g. `0 5px 10px black`)"
+      }
+    },
+    {
+      "name": "--ag-advanced-filter-join-pill-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Color of the join operator pills in the Advanced Filter Builder.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-advanced-filter-column-pill-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Color of the column pills in the Advanced Filter Builder.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-advanced-filter-option-pill-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Color of the filter option pills in the Advanced Filter Builder.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-advanced-filter-value-pill-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Color of the value pills in the Advanced Filter Builder.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-row-loading-skeleton-effect-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Color of the skeleton loading effect used in the SSRM.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-find-match-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Color of matches used in Find.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-find-match-background-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Background color of matches used in Find.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-find-active-match-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Color of the active match used in Find.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    },
+    {
+      "name": "--ag-find-active-match-background-color",
+      "description": {
+        "kind": "markdown",
+        "value": "Background color of the active match used in Find.\n\n CSS color (e.g. `red` or `#fff`)"
+      }
+    }
+  ]
+}

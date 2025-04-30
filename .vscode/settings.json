@@ -1,4 +1,4 @@
 {
   "typescript.tsdk": "node_modules/typescript/lib",
-  "css.customData": ["/Users/Chaim/angular-playground/ag-grid-theme-snippets.json"]
+  "css.customData": ["src/ag-grid-theme-css-snippets.css-data.json"]
 }

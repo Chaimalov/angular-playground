@@ -7,10 +7,6 @@
 @import 'ag-grid-community/styles/ag-grid.css';
 @layer theme, base, components, utilities;
 
-@theme {
-  --color-brand: 'purple';
-}
-
 .ag-theme-quartz {
   --ag-background-color: var(--color-brand);
   --ag-accent-color: var(--color-cyan-500);
