@@ -5,16 +5,15 @@
 @import 'tailwindcss';
 
 @import 'ag-grid-community/styles/ag-grid.css';
+@import 'ag-grid-community/styles/ag-theme-quartz.css';
 @layer theme, base, components, utilities;
 
 .ag-theme-quartz {
-  --ag-background-color: var(--color-brand);
-  --ag-accent-color: var(--color-cyan-500);
-  --ag-spacing: calc(var(--spacing) * 2);
-  --ag-text-color: var(--color-gray-50);
-  --ag-border-color: var(--color-gray-700);
-  --ag-header-background-color: var(--color-neutral-700);
-  --ag-foreground-color: var(--color-gray-50);
+  --ag-background-color: theme(--color-neutral-800);
+  --ag-active-color: theme(--color-cyan-400);
+  --ag-borders-critical: 1px solid;
+  --ag-header-background-color: theme(--color-neutral-700);
+  --ag-foreground-color: theme(--color-white);
 }
 
 ::view-transition-group(*) {

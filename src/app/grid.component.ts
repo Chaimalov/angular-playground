@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
-import { ClientSideRowModelModule, GridOptions, ModuleRegistry } from 'ag-grid-community';
+import { ClientSideRowModelModule, GridOptions, ModuleRegistry, TextFilterModule } from 'ag-grid-community';
 
-ModuleRegistry.registerModules([ClientSideRowModelModule]);
+ModuleRegistry.registerModules([ClientSideRowModelModule, TextFilterModule]);
 
 @Component({
   selector: 'app-grid',
   imports: [AgGridAngular],
   template: `<ag-grid-angular
-    class="h-80"
-    class="ag-theme-quartz"
+    class="h-80 ag-theme-quartz"
     theme="legacy"
     [gridOptions]="gridOptions"></ag-grid-angular>`,
 })
@@ -32,11 +31,8 @@ export class GridComponent {
     defaultColDef: {
       sortable: true,
       filter: true,
-      floatingFilter: true,
       resizable: true,
       flex: 1,
-      minWidth: 100,
-      maxWidth: 500,
       contextMenuItems: ['copy', 'copyWithHeaders', 'paste', 'export', 'separator', 'resetColumns'],
     },
     animateRows: true,
