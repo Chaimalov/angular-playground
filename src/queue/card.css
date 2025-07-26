@@ -1,0 +1,45 @@
+details {
+  display: grid;
+}
+
+details::details-content {
+  content-visibility: visible;
+  overflow: hidden;
+  height: 60px;
+  mask: linear-gradient(to top, transparent, black);
+}
+
+details[open]::details-content {
+  height: auto;
+  mask: none;
+}
+
+summary {
+  order: 2;
+}
+
+details[open] summary::after {
+  content: ' פחות';
+}
+
+details summary::after {
+  content: ' עוד';
+}
+
+svg {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  right: auto;
+  rotate: 90deg;
+  transition: rotate 0.2s ease-in-out;
+}
+
+details[open] summary svg {
+  rotate: -90deg;
+}
+
+summary {
+  position: relative;
+  list-style: none;
+}

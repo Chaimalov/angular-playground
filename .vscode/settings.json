@@ -1,4 +1,5 @@
 {
   "typescript.tsdk": "node_modules/typescript/lib",
-  "css.customData": ["src/ag-grid-theme-css-snippets.css-data.json"]
+  "css.customData": ["src/ag-grid-theme-css-snippets.css-data.json"],
+  "nxConsole.generateAiAgentRules": true
 }
