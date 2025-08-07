@@ -24,7 +24,7 @@ export class LabelComponent {
   public layer = input.required<Layer>();
 
   protected label = rxResource({
-    request: this.layer,
-    loader: ({ request }) => request.label ?? of(undefined),
+    params: this.layer,
+    stream: ({ params }) => params.label ?? of(undefined),
   });
 }

@@ -1,47 +1,56 @@
-import { CdkVirtualForOf, CdkVirtualScrollViewport, VIRTUAL_SCROLL_STRATEGY } from '@angular/cdk/scrolling';
+import { FocusKeyManager } from '@angular/cdk/a11y';
 import { DatePipe } from '@angular/common';
-import { Component, ElementRef, viewChildren } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { afterNextRender, Component, effect, ElementRef, inject, Injector, signal, viewChildren } from '@angular/core';
 import { v4 } from 'uuid';
-import { FreezeVirtualScrollStrategy } from './FreezeVirtualScrollStrategy';
 import { CollapsibleCardComponent } from './card.component';
+import { VirtualListComponent } from './virtual-list.component';
 
 @Component({
   selector: 'app-queue',
   template: ` <button (click)="addItems()">Add Item</button>
-    <cdk-virtual-scroll-viewport class="h-100 w-50 border border-amber-200" (scrolledIndexChange)="close()">
-      <app-collapsible-card
-        dir="rtl"
-        class="block p-4 border border-amber-100 rounded"
-        *cdkVirtualFor="let item of items; trackBy: trackBy">
-        {{ item.creationDate | date: 'HH:mm:ss' }}
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum officiis adipisci facere aperiam saepe
-          doloribus, harum quas sed itaque dolor?
-        </p>
-      </app-collapsible-card>
-    </cdk-virtual-scroll-viewport>`,
-  imports: [CdkVirtualScrollViewport, CdkVirtualForOf, DatePipe, CollapsibleCardComponent],
-  providers: [
-    {
-      provide: VIRTUAL_SCROLL_STRATEGY,
-      useFactory: () => new FreezeVirtualScrollStrategy(116),
-    },
-  ],
+    <app-virtual-list
+      [items]="items()"
+      class="h-100 w-50 border border-amber-200"
+      (keydown)="keyManager.onKeydown($event)">
+      <ng-template #template let-item>
+        <app-collapsible-card
+          dir="rtl"
+          tabindex="0"
+          class="focus:border-white block p-4 border border-amber-100 rounded">
+          {{ item.creationDate | date: 'HH:mm:ss' }}
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum officiis adipisci facere aperiam saepe
+            doloribus, harum quas sed itaque dolor?
+          </p>
+        </app-collapsible-card>
+      </ng-template>
+    </app-virtual-list>`,
+  imports: [DatePipe, CollapsibleCardComponent, VirtualListComponent],
 })
 export class QueueComponent {
-  protected items = new BehaviorSubject<{ id: string; creationDate: string }[]>([]);
+  private injector = inject(Injector);
+  protected items = signal(Array.from({ length: 2 }, () => ({ id: v4(), creationDate: new Date().toISOString() })));
   protected cards = viewChildren<CollapsibleCardComponent, ElementRef<HTMLElement>>(CollapsibleCardComponent, {
     read: ElementRef,
   });
 
-  protected trackBy(index: number, item: { id: string; creationDate: string }): string {
-    return item.id;
+  private elements = viewChildren(CollapsibleCardComponent);
+
+  protected keyManager = new FocusKeyManager(this.elements, this.injector);
+
+  constructor() {
+    afterNextRender(() => {
+      this.keyManager.setFirstItemActive();
+    });
+
+    effect(() => {
+      this.elements().forEach(console.log);
+    });
   }
 
   protected addItems(): void {
     const newItems = Array.from({ length: 2 }, () => ({ id: v4(), creationDate: new Date().toISOString() }));
-    this.items.next([...newItems, ...this.items.value]);
+    this.items.update(items => [...newItems, ...items]);
   }
 
   close(): void {

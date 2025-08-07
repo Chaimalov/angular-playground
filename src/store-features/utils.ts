@@ -5,11 +5,11 @@ import { fromEvent, isObservable, Observable, takeUntil } from 'rxjs';
 export async function resolveResource<
   R extends ResourceLoaderParams<Retrievable<unknown>>,
   T = R extends ResourceLoaderParams<Retrievable<infer L>> ? L : never,
->({ request, abortSignal }: R): Promise<Signal<ResourceStreamItem<T>>> {
-  if (isObservable(request)) {
+>({ params, abortSignal }: R): Promise<Signal<ResourceStreamItem<T>>> {
+  if (isObservable(params)) {
     const stream = signal<ResourceStreamItem<T>>({ value: undefined as T });
     const { promise, resolve } = Promise.withResolvers<Signal<ResourceStreamItem<T>>>();
-    (request as Observable<T>).pipe(takeUntil(fromEvent(abortSignal, 'abort'))).subscribe({
+    (params as Observable<T>).pipe(takeUntil(fromEvent(abortSignal, 'abort'))).subscribe({
       next: value => {
         stream.set({ value });
         resolve(stream);
@@ -23,17 +23,17 @@ export async function resolveResource<
     return promise;
   }
 
-  if (typeof request === 'function') {
+  if (typeof params === 'function') {
     try {
       return signal({
-        value: await request(abortSignal),
+        value: await params(abortSignal),
       });
     } catch (error) {
-      return signal({ error });
+      return signal({ error: error as Error });
     }
   }
 
-  return signal({ value: request as T });
+  return signal({ value: params as T });
 }
 
 type LazyResourceRequest<T> = {

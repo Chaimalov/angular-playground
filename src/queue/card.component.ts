@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { FocusableOption } from '@angular/cdk/a11y';
+import { Component, ElementRef, inject } from '@angular/core';
 
 @Component({
   selector: 'app-collapsible-card',
@@ -25,4 +26,9 @@ import { Component } from '@angular/core';
   `,
   styleUrls: ['./card.css'],
 })
-export class CollapsibleCardComponent {}
+export class CollapsibleCardComponent implements FocusableOption {
+  private elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
+  focus(): void {
+    this.elementRef.nativeElement.focus();
+  }
+}

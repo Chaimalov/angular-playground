@@ -37,9 +37,9 @@ export class AppComponent {
   }
 
   protected selectedResource = rxResource({
-    request: this.selected,
-    loader: ({ request }) =>
-      combineLatest([request.imageUrl ?? of(undefined), request.tableRows ?? of(undefined)]).pipe(
+    params: this.selected,
+    stream: ({ params }) =>
+      combineLatest([params.imageUrl ?? of(undefined), params.tableRows ?? of(undefined)]).pipe(
         map(([image, rows]) => ({ image, rows }))
       ),
   });
