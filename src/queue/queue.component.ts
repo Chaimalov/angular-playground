@@ -30,9 +30,6 @@ import { VirtualListComponent } from './virtual-list.component';
 export class QueueComponent {
   private injector = inject(Injector);
   protected items = signal(Array.from({ length: 2 }, () => ({ id: v4(), creationDate: new Date().toISOString() })));
-  protected cards = viewChildren<CollapsibleCardComponent, ElementRef<HTMLElement>>(CollapsibleCardComponent, {
-    read: ElementRef,
-  });
 
   private elements = viewChildren(CollapsibleCardComponent);
 
@@ -42,20 +39,10 @@ export class QueueComponent {
     afterNextRender(() => {
       this.keyManager.setFirstItemActive();
     });
-
-    effect(() => {
-      this.elements().forEach(console.log);
-    });
   }
 
   protected addItems(): void {
     const newItems = Array.from({ length: 2 }, () => ({ id: v4(), creationDate: new Date().toISOString() }));
     this.items.update(items => [...newItems, ...items]);
-  }
-
-  close(): void {
-    this.cards().forEach(card => {
-      card.nativeElement.querySelector('details')?.removeAttribute('open');
-    });
   }
 }
