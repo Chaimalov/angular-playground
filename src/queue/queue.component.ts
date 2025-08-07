@@ -1,6 +1,5 @@
-import { FocusKeyManager } from '@angular/cdk/a11y';
 import { DatePipe } from '@angular/common';
-import { afterNextRender, Component, effect, ElementRef, inject, Injector, signal, viewChildren } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { v4 } from 'uuid';
 import { CollapsibleCardComponent } from './card.component';
 import { VirtualListComponent } from './virtual-list.component';
@@ -10,13 +9,12 @@ import { VirtualListComponent } from './virtual-list.component';
   template: ` <button (click)="addItems()">Add Item</button>
     <app-virtual-list
       [items]="items()"
-      class="h-100 w-50 border border-amber-200"
-      (keydown)="keyManager.onKeydown($event)">
-      <ng-template #template let-item>
-        <app-collapsible-card
-          dir="rtl"
-          tabindex="0"
-          class="focus:border-white block p-4 border border-amber-100 rounded">
+      tabindex="0"
+      idKey="id"
+      class="grid gap-1 h-100 overflow-auto border border-amber-200">
+      <ng-template let-item>
+        <app-collapsible-card dir="rtl" class="group-focus:bg-gray-700 p-4 border block border-amber-100 rounded">
+          <h2>{{ item.index }}</h2>
           {{ item.creationDate | date: 'HH:mm:ss' }}
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum officiis adipisci facere aperiam saepe
@@ -28,21 +26,12 @@ import { VirtualListComponent } from './virtual-list.component';
   imports: [DatePipe, CollapsibleCardComponent, VirtualListComponent],
 })
 export class QueueComponent {
-  private injector = inject(Injector);
-  protected items = signal(Array.from({ length: 2 }, () => ({ id: v4(), creationDate: new Date().toISOString() })));
-
-  private elements = viewChildren(CollapsibleCardComponent);
-
-  protected keyManager = new FocusKeyManager(this.elements, this.injector);
-
-  constructor() {
-    afterNextRender(() => {
-      this.keyManager.setFirstItemActive();
-    });
-  }
+  protected items = signal(
+    Array.from({ length: 10_000 }, (_, index) => ({ index, id: v4(), creationDate: new Date().toISOString() }))
+  );
 
   protected addItems(): void {
-    const newItems = Array.from({ length: 2 }, () => ({ id: v4(), creationDate: new Date().toISOString() }));
-    this.items.update(items => [...newItems, ...items]);
+    const newItem = { index: this.items().length, id: v4(), creationDate: new Date().toISOString() };
+    this.items.update(items => [newItem, ...items]);
   }
 }
