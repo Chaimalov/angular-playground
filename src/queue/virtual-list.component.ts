@@ -21,7 +21,7 @@ import {
   viewChild,
   viewChildren,
 } from '@angular/core';
-import { ObserveDirective } from './observe.directive';
+import { VirtualizedItemDirective } from './observe.directive';
 import { VirtualForOfDirective } from './virtual-for-of.directive';
 
 export const Observer = new InjectionToken<IntersectionObserver>('IntersectionObserver');
@@ -62,12 +62,12 @@ export type Observer = IntersectionObserver;
 @Component({
   selector: 'app-virtual-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgTemplateOutlet, ObserveDirective],
+  imports: [NgTemplateOutlet, VirtualizedItemDirective],
   template: `
     <div #topSentinel class="h-1"></div>
     @for (item of inRangeItems(); track item[idKey()]) {
       <div
-        appObserve
+        appVirtualized
         #element
         #focusable="focusable"
         (focus)="keyManager.setActiveItem(focusable)"
@@ -171,8 +171,8 @@ export class VirtualListComponent<T> {
     { ...this.observerOptions, rootMargin: '2000px' }
   );
 
-  private elements = viewChildren(ObserveDirective);
-  protected keyManager: ListKeyManager<ObserveDirective> = new FocusKeyManager(this.elements, this.injector);
+  private elements = viewChildren(VirtualizedItemDirective);
+  protected keyManager: ListKeyManager<VirtualizedItemDirective> = new FocusKeyManager(this.elements, this.injector);
 
   constructor() {
     afterNextRender(() => {
