@@ -78,7 +78,10 @@ export type Observer = IntersectionObserver;
         tabindex="0">
         <ng-container
           [ngTemplateOutlet]="intersections.get(element) ? template() : null"
-          [ngTemplateOutletContext]="{ $implicit: item }"></ng-container>
+          [ngTemplateOutletContext]="{
+            $implicit: item,
+            $index: $index + range().start,
+          }"></ng-container>
       </div>
     }
     <div #bottomSentinel class="h-1"></div>
@@ -122,9 +125,9 @@ export class VirtualListComponent<T> {
   private bottomSentinelElement = viewChild.required<ElementRef<HTMLElement>>('bottomSentinel');
 
   public pageSize = input(100);
-  private page = signal(1);
+  protected page = signal(1);
 
-  private range = linkedSignal(() => {
+  protected range = linkedSignal(() => {
     const page = this.page();
     const halfPageSize = this.pageSize() / 2;
 
@@ -165,7 +168,7 @@ export class VirtualListComponent<T> {
   private bottomSentinelObserver = new IntersectionObserver(
     ([entry]) => {
       if (entry.isIntersecting) {
-        this.page.update(page => page + 1);
+        this.page.update(page => Math.min(page + 1, Math.ceil(this.items().length / this.pageSize())));
       }
     },
     { ...this.observerOptions, rootMargin: '2000px' }
