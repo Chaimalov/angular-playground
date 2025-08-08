@@ -22,27 +22,42 @@ import {
   viewChildren,
 } from '@angular/core';
 import { ObserveDirective } from './observe.directive';
+import { VirtualForOfDirective } from './virtual-for-of.directive';
 
 export const Observer = new InjectionToken<IntersectionObserver>('IntersectionObserver');
 export type Observer = IntersectionObserver;
 
 /**
- * A component that displays a long list of items in a way that is performant and accessible.
+ * VirtualListComponent
  *
- * This component is designed to be used when you have a large list of items that need to be
- * displayed in a scrollable container. It will only render the items that are currently visible
- * in the viewport, which greatly improves performance.
+ * A performant, accessible Angular component for rendering large, scrollable lists using virtualization.
+ * Only the items currently visible in the viewport are rendered, improving performance for long lists.
  *
- * The component also provides a way to focus on items in the list using the keyboard.
+ * ### Features
+ * - **Virtualization:** Renders only visible items for optimal performance.
+ * - **Keyboard Navigation:** Supports arrow key navigation and focus management.
+ * - **Custom Item Templates:** Use the {@link VirtualForOfDirective} structural directive to define item rendering.
+ * - **Configurable:** Supports custom item height, page size, and root margin via host attributes.
  *
- * @example
+ * ### Usage Example (Structural Directive)
  * ```html
- * <app-virtual-list [items]="items" idKey="id">
- *   <ng-template #template let-item="item">
+ * <app-virtual-list [pageSize]="50" placeholderHeight="80px" rootMargin="600px">
+ *   <section *appVirtualFor="let item of items; idKey: 'id'">
  *     {{ item.name }}
- *   </ng-template>
+ *   </section>
  * </app-virtual-list>
  * ```
+ *
+ * ### Inputs
+ * | Input              | Type     | Default    | Description                                                      |
+ * |--------------------|----------|------------|------------------------------------------------------------------|
+ * | `placeholderHeight`| string   | '100px'    | Minimum height for each item placeholder                         |
+ * | `rootMargin`       | string   | '500px'    | Margin around the root for intersection observer                 |
+ * | `pageSize`         | number   | 100        | Number of items to render per page                               |
+ *
+ * ### Methods
+ * - `scrollToTop()`: Scrolls to the top of the list and focuses the first item.
+ * - `scrollToId(id: string)`: Scrolls to and focuses the item with the given id.
  */
 @Component({
   selector: 'app-virtual-list',
@@ -84,9 +99,10 @@ export type Observer = IntersectionObserver;
 export class VirtualListComponent<T> {
   placeholderHeight = inject(new HostAttributeToken('placeholderHeight'), { optional: true }) ?? '100px';
   rootMargin = inject(new HostAttributeToken('rootMargin'), { optional: true }) ?? '500px';
-  items = input.required<T[]>();
-  idKey = input.required<keyof T>();
-  template = contentChild.required(TemplateRef);
+
+  items = signal<T[]>([]);
+  idKey = signal<keyof T>('id' as keyof T);
+  template = contentChild.required(VirtualForOfDirective, { read: TemplateRef });
 
   private destroyRef = inject(DestroyRef);
   private injector = inject(Injector);
@@ -137,17 +153,23 @@ export class VirtualListComponent<T> {
     this.cdr.markForCheck();
   }, this.observerOptions);
 
-  private topSentinelObserver = new IntersectionObserver(([entry]) => {
-    if (entry.isIntersecting) {
-      this.page.update(page => Math.max(1, page - 1));
-    }
-  }, this.observerOptions);
+  private topSentinelObserver = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        this.page.update(page => Math.max(1, page - 1));
+      }
+    },
+    { ...this.observerOptions, rootMargin: '2000px' }
+  );
 
-  private bottomSentinelObserver = new IntersectionObserver(([entry]) => {
-    if (entry.isIntersecting) {
-      this.page.update(page => page + 1);
-    }
-  }, this.observerOptions);
+  private bottomSentinelObserver = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        this.page.update(page => page + 1);
+      }
+    },
+    { ...this.observerOptions, rootMargin: '2000px' }
+  );
 
   private elements = viewChildren(ObserveDirective);
   protected keyManager: ListKeyManager<ObserveDirective> = new FocusKeyManager(this.elements, this.injector);
