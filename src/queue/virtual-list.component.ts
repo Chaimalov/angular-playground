@@ -7,7 +7,9 @@ import {
   Component,
   computed,
   contentChild,
+  contentChildren,
   DestroyRef,
+  effect,
   ElementRef,
   forwardRef,
   HostAttributeToken,
@@ -23,6 +25,7 @@ import {
 } from '@angular/core';
 import { VirtualizedItemDirective } from './observe.directive';
 import { VirtualForOfDirective } from './virtual-for-of.directive';
+import { FocusableDirective } from './focusable.directive';
 
 export const Observer = new InjectionToken<IntersectionObserver>('IntersectionObserver');
 export type Observer = IntersectionObserver;
@@ -62,27 +65,26 @@ export type Observer = IntersectionObserver;
 @Component({
   selector: 'app-virtual-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgTemplateOutlet, VirtualizedItemDirective],
+  imports: [NgTemplateOutlet, VirtualizedItemDirective, FocusableDirective],
   template: `
     <div #topSentinel class="h-1"></div>
     @for (item of inRangeItems(); track item[idKey()]) {
-      <div
+      <!-- <div
         appVirtualized
         #element
-        #focusable="focusable"
-        (focus)="keyManager.setActiveItem(focusable)"
         [attr.data-id]="item[idKey()]"
         style="min-height: {{ placeholderHeight }}"
-        class="h-max group [content-visibility:auto] empty:bg-gray-900"
+        class="h-max group [content-visibility:auto] empty:bg-gray-900 contents"
         role="listitem"
-        tabindex="0">
-        <ng-container
-          [ngTemplateOutlet]="intersections.get(element) ? template() : null"
-          [ngTemplateOutletContext]="{
-            $implicit: item,
-            $index: $index + range().start,
-          }"></ng-container>
-      </div>
+        tabindex="0"> -->
+      <ng-container
+        [ngTemplateOutlet]="template()"
+        [ngTemplateOutletContext]="{
+          $implicit: item,
+          $index: $index + range().start,
+          $id: item[idKey()],
+        }"></ng-container>
+      <!-- </div> -->
     }
     <div #bottomSentinel class="h-1"></div>
   `,
@@ -90,6 +92,11 @@ export type Observer = IntersectionObserver;
     {
       provide: Observer,
       useFactory: (virtual: VirtualListComponent<unknown>) => virtual.observer,
+      deps: [forwardRef(() => VirtualListComponent)],
+    },
+    {
+      provide: ListKeyManager,
+      useFactory: (virtual: VirtualListComponent<unknown>) => virtual.keyManager,
       deps: [forwardRef(() => VirtualListComponent)],
     },
   ],
@@ -174,10 +181,14 @@ export class VirtualListComponent<T> {
     { ...this.observerOptions, rootMargin: '2000px' }
   );
 
-  private elements = viewChildren(VirtualizedItemDirective);
-  protected keyManager: ListKeyManager<VirtualizedItemDirective> = new FocusKeyManager(this.elements, this.injector);
+  private elements = contentChildren(FocusableDirective, { descendants: true });
+  protected keyManager = new FocusKeyManager(this.elements, this.injector);
 
   constructor() {
+    effect(() => {
+      console.log(this.elements());
+    });
+
     afterNextRender(() => {
       this.keyManager.setFirstItemActive();
 

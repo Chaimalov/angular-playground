@@ -20,7 +20,7 @@ export class VirtualForOfDirective<T> {
   static ngTemplateContextGuard<T>(
     dir: VirtualForOfDirective<T>,
     ctx: unknown
-  ): ctx is { $implicit: T; $index: number } {
+  ): ctx is { $implicit: T; $index: number; $id: string } {
     return true;
   }
 }
