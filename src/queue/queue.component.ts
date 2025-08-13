@@ -34,7 +34,7 @@ import { KeyManagerDirective } from './key-manager.directive';
           </app-collapsible-card>
         }
 
-        <div placeholder class="h-30 bg-neutral-700 animate-pulse"></div>
+        <div placeholder class="h-30 bg-neutral-700"></div>
       </app-virtual-item>
     </app-virtual-list>`,
   imports: [
