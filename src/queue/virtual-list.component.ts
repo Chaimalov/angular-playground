@@ -1,31 +1,25 @@
-import { FocusKeyManager, ListKeyManager } from '@angular/cdk/a11y';
 import { NgTemplateOutlet } from '@angular/common';
 import {
   afterNextRender,
+  afterRenderEffect,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   computed,
   contentChild,
-  contentChildren,
   DestroyRef,
-  effect,
   ElementRef,
   forwardRef,
   HostAttributeToken,
   inject,
   InjectionToken,
-  Injector,
   input,
   linkedSignal,
   signal,
   TemplateRef,
   viewChild,
-  viewChildren,
 } from '@angular/core';
-import { VirtualizedItemDirective } from './observe.directive';
 import { VirtualForOfDirective } from './virtual-for-of.directive';
-import { FocusableDirective } from './focusable.directive';
 
 export const Observer = new InjectionToken<IntersectionObserver>('IntersectionObserver');
 export type Observer = IntersectionObserver;
@@ -65,18 +59,10 @@ export type Observer = IntersectionObserver;
 @Component({
   selector: 'app-virtual-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgTemplateOutlet, VirtualizedItemDirective, FocusableDirective],
+  imports: [NgTemplateOutlet],
   template: `
     <div #topSentinel class="h-1"></div>
     @for (item of inRangeItems(); track item[idKey()]) {
-      <!-- <div
-        appVirtualized
-        #element
-        [attr.data-id]="item[idKey()]"
-        style="min-height: {{ placeholderHeight }}"
-        class="h-max group [content-visibility:auto] empty:bg-gray-900 contents"
-        role="listitem"
-        tabindex="0"> -->
       <ng-container
         [ngTemplateOutlet]="template()"
         [ngTemplateOutletContext]="{
@@ -84,7 +70,6 @@ export type Observer = IntersectionObserver;
           $index: $index + range().start,
           $id: item[idKey()],
         }"></ng-container>
-      <!-- </div> -->
     }
     <div #bottomSentinel class="h-1"></div>
   `,
@@ -94,17 +79,7 @@ export type Observer = IntersectionObserver;
       useFactory: (virtual: VirtualListComponent<unknown>) => virtual.observer,
       deps: [forwardRef(() => VirtualListComponent)],
     },
-    {
-      provide: ListKeyManager,
-      useFactory: (virtual: VirtualListComponent<unknown>) => virtual.keyManager,
-      deps: [forwardRef(() => VirtualListComponent)],
-    },
   ],
-  host: {
-    '(keydown)': 'keyManager.onKeydown($event)',
-    role: 'list',
-    tabindex: '0',
-  },
 })
 export class VirtualListComponent<T> {
   placeholderHeight = inject(new HostAttributeToken('placeholderHeight'), { optional: true }) ?? '100px';
@@ -115,14 +90,12 @@ export class VirtualListComponent<T> {
   template = contentChild.required(VirtualForOfDirective, { read: TemplateRef });
 
   private destroyRef = inject(DestroyRef);
-  private injector = inject(Injector);
   private element = inject<ElementRef<HTMLElement>>(ElementRef);
   private cdr = inject(ChangeDetectorRef);
 
   private readonly observerOptions = {
     root: this.element.nativeElement,
     rootMargin: this.rootMargin,
-    threshold: 0.1,
     // Optional delay to reduce performance impact
     // only works in Chromium browsers
     ...{ delay: 100 },
@@ -181,19 +154,27 @@ export class VirtualListComponent<T> {
     { ...this.observerOptions, rootMargin: '2000px' }
   );
 
-  private elements = contentChildren(FocusableDirective, { descendants: true });
-  protected keyManager = new FocusKeyManager(this.elements, this.injector);
-
   constructor() {
-    effect(() => {
-      console.log(this.elements());
+    afterNextRender({
+      earlyRead: () => {
+        this.topSentinelObserver.observe(this.topSentinelElement().nativeElement);
+        this.bottomSentinelObserver.observe(this.bottomSentinelElement().nativeElement);
+      },
     });
 
-    afterNextRender(() => {
-      this.keyManager.setFirstItemActive();
-
-      this.topSentinelObserver.observe(this.topSentinelElement().nativeElement);
-      this.bottomSentinelObserver.observe(this.bottomSentinelElement().nativeElement);
+    afterRenderEffect({
+      earlyRead: () => {
+        return Math.max(
+          ...this.element.nativeElement
+            .querySelectorAll<HTMLElement>('[data-id]:nth-child(-n+3)')
+            .values()
+            .map(item => item.offsetHeight)
+        );
+      },
+      write: itemHeight => {
+        this.topSentinelElement().nativeElement.style.height = `${this.range().start * itemHeight()}px`;
+        this.bottomSentinelElement().nativeElement.style.height = `${(this.items().length - this.range().end) * itemHeight()}px`;
+      },
     });
 
     this.destroyRef.onDestroy(() => {
@@ -208,7 +189,6 @@ export class VirtualListComponent<T> {
 
     requestIdleCallback(() => {
       this.element.nativeElement.scrollTo({ top: 0, behavior: 'smooth' });
-      this.keyManager.setFirstItemActive();
     });
   }
 

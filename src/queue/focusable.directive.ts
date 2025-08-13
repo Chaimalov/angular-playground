@@ -5,12 +5,11 @@ import { Directive, ElementRef, inject } from '@angular/core';
   selector: '[appFocusable]',
   exportAs: 'focusable',
   host: {
-    '[attr.tabindex]': '0',
+    tabindex: '0',
   },
 })
 export class FocusableDirective implements FocusableOption, ListKeyManagerOption, Highlightable {
   private element = inject<ElementRef<HTMLElement>>(ElementRef);
-  protected keyManager = inject(ListKeyManager);
 
   setActiveStyles(): void {
     this.element.nativeElement.classList.add('active');

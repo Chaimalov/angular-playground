@@ -6,15 +6,14 @@ import { VirtualListComponent } from './virtual-list.component';
 import { VirtualForOfDirective } from './virtual-for-of.directive';
 import { VirtualItemComponent } from './virtual-item.component';
 import { FocusableDirective } from './focusable.directive';
+import { KeyManagerDirective } from './key-manager.directive';
 
 @Component({
   selector: 'app-queue',
   template: ` <button (click)="addItems()">Add Item</button>
-    <app-virtual-list class="grid gap-2 p-2 h-100 overflow-auto border border-amber-200">
+    <app-virtual-list keyManager="focus" class="grid gap-2 p-2 h-100 overflow-auto border border-amber-200">
       <app-virtual-item
         *appVirtualFor="let item of items(); idKey: 'id'; let index = $index; let id = $id"
-        [class.sticky]="index % 100 === 0"
-        [class.top-2]="index % 100 === 0"
         appFocusable
         [attr.data-id]="id">
         @if (index % 100 === 0) {
@@ -34,6 +33,8 @@ import { FocusableDirective } from './focusable.directive';
             </p>
           </app-collapsible-card>
         }
+
+        <div placeholder class="h-30 bg-neutral-700 animate-pulse"></div>
       </app-virtual-item>
     </app-virtual-list>`,
   imports: [
@@ -43,10 +44,11 @@ import { FocusableDirective } from './focusable.directive';
     VirtualForOfDirective,
     FocusableDirective,
     VirtualItemComponent,
+    KeyManagerDirective,
   ],
 })
 export class QueueComponent {
-  protected items = signal(Array.from({ length: 300 }, () => ({ id: v4(), creationDate: new Date().toISOString() })));
+  protected items = signal(Array.from({ length: 3000 }, () => ({ id: v4(), creationDate: new Date().toISOString() })));
 
   protected addItems(): void {
     const newItem = { id: v4(), creationDate: new Date().toISOString() };
