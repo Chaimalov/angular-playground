@@ -12,19 +12,19 @@
   #virtualList
   keyManager="focus"
   class="grid gap-2 p-2 h-100 overflow-auto border border-amber-200">
-  @for (virtual of virtualList.inRangeItems(); track virtual.item.id) {
+  @for (item of virtualList.renderedItems(); track item.data.id) {
     <app-virtual-item class="animate-fade-in">
-      @if (virtual.$index % 100 === 0) {
+      @if (item.$index % 100 === 0) {
         <div class="m-auto p-2 z-10 bg-neutral-400 rounded">
-          <span>{{ virtual.$index }}</span>
+          <span>{{ item.$index }}</span>
         </div>
       } @else {
         <app-collapsible-card
           appFocusable
           dir="rtl"
           class="focus:bg-gray-700 animate-fade-in p-4 border block border-amber-100 rounded">
-          <h2>{{ virtual.$index }}</h2>
-          {{ virtual.item.creationDate | date: 'HH:mm:ss' }}
+          <h2>{{ item.$index }}</h2>
+          {{ item.data.creationDate | date: 'HH:mm:ss' }}
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum officiis adipisci facere aperiam saepe
             doloribus, harum quas sed itaque dolor?
