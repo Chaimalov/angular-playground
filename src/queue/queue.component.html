@@ -1,0 +1,38 @@
+<div class="flex gap-2 p-2">
+  <button (click)="addItems()">Add Item</button>
+  <button (click)="virtualList.scrollToTop()">Scroll to Top</button>
+  <button (click)="virtualList.scrollToBottom()">Scroll to Bottom</button>
+  <form action="" (submit)="(false)">
+    <input type="number" #inputIndex />
+    <button (click)="virtualList.scrollToIndex(inputIndex.valueAsNumber)">Scroll To Index</button>
+  </form>
+</div>
+<app-virtual-list
+  [items]="items()"
+  #virtualList
+  keyManager="focus"
+  class="grid gap-2 p-2 h-100 overflow-auto border border-amber-200">
+  @for (virtual of virtualList.inRangeItems(); track virtual.item.id) {
+    <app-virtual-item class="animate-fade-in">
+      @if (virtual.$index % 100 === 0) {
+        <div class="m-auto p-2 z-10 bg-neutral-400 rounded">
+          <span>{{ virtual.$index }}</span>
+        </div>
+      } @else {
+        <app-collapsible-card
+          appFocusable
+          dir="rtl"
+          class="focus:bg-gray-700 animate-fade-in p-4 border block border-amber-100 rounded">
+          <h2>{{ virtual.$index }}</h2>
+          {{ virtual.item.creationDate | date: 'HH:mm:ss' }}
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum officiis adipisci facere aperiam saepe
+            doloribus, harum quas sed itaque dolor?
+          </p>
+        </app-collapsible-card>
+      }
+
+      <div placeholder class="h-30 bg-neutral-700 animate-fade-in"></div>
+    </app-virtual-item>
+  }
+</app-virtual-list>

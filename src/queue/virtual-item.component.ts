@@ -7,7 +7,7 @@ import { VirtualListComponent } from './virtual-list.component';
   selector: 'app-virtual-item',
   template: `
     @if (isIntersecting(element.nativeElement)) {
-      <ng-content select="[content]"></ng-content>
+      <ng-content></ng-content>
     } @else {
       <ng-content select="[placeholder]">
         <div class="h-30 bg-red-400"></div>

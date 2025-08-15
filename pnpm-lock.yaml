@@ -135,6 +135,9 @@ importers:
       prettier-eslint:
         specifier: ^16.3.0
         version: 16.4.2(typescript@5.8.3)
+      tailwind-animations:
+        specifier: ^0.0.1
+        version: 0.0.1(tailwindcss@4.1.11)
       typescript:
         specifier: ~5.8.3
         version: 5.8.3
@@ -6359,6 +6362,11 @@ packages:
   synckit@0.11.11:
     resolution: {integrity: sha512-MeQTA1r0litLUf0Rp/iisCaL8761lKAZHaimlbGK4j0HysC4PLfqygQj9srcs0m2RdtDYnF8UuYyKpbjHYp7Jw==}
     engines: {node: ^14.18.0 || >=16.0.0}
+
+  tailwind-animations@0.0.1:
+    resolution: {integrity: sha512-iLrKlvTdTy76TC/mi6ms/4TUOQptNH6odYN3X7n0pdzSEo0ISxKmcheu5fVEo8ERB/pzRXnm/Ajx7Bq21ECKiw==}
+    peerDependencies:
+      tailwindcss: ^3.0.0
 
   tailwindcss@4.1.11:
     resolution: {integrity: sha512-2E9TBm6MDD/xKYe+dvJZAmg3yxIEDNRc0jwlNyDg/4Fil2QcSLjFKGVff0lAf1jjeaArlG/M75Ey/EYr/OJtBA==}
@@ -14733,6 +14741,10 @@ snapshots:
   synckit@0.11.11:
     dependencies:
       '@pkgr/core': 0.2.9
+
+  tailwind-animations@0.0.1(tailwindcss@4.1.11):
+    dependencies:
+      tailwindcss: 4.1.11
 
   tailwindcss@4.1.11: {}
 

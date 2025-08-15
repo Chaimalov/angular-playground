@@ -12,8 +12,8 @@ export class VirtualForOfDirective<T> {
 
   constructor() {
     effect(() => {
-      this.virtualList.items.set(this.appVirtualForOf());
-      this.virtualList.idKey.set(this.appVirtualForIdKey());
+      // this.virtualList.items.set(this.appVirtualForOf());
+      // this.virtualList.idKey.set(this.appVirtualForIdKey());
     });
   }
 

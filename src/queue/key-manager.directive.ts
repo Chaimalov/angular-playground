@@ -12,7 +12,7 @@ import { ActiveDescendantKeyManager, FocusKeyManager } from '@angular/cdk/a11y';
 })
 export class KeyManagerDirective {
   private keyManager = inject(new HostAttributeToken('keyManager'), { optional: true });
-  private items = contentChildren(FocusableDirective);
+  private items = contentChildren(FocusableDirective, { descendants: true });
 
   public manager = new (this.keyManager === 'focus' ? FocusKeyManager : ActiveDescendantKeyManager)(
     this.items,
