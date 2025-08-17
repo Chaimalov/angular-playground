@@ -1,4 +1,4 @@
-import { JsonPipe, KeyValuePipe } from '@angular/common';
+import { KeyValuePipe } from '@angular/common';
 import { Component, inject, linkedSignal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
@@ -6,12 +6,11 @@ import { combineLatest, map, of } from 'rxjs';
 import { v4 } from 'uuid';
 import { FormService } from '../forms/form.service';
 import { JokesLayer, Layer, LayerStore, UserLayer } from '../layers';
-import { GenericFormComponent } from './generic-form.component';
 import { LabelComponent } from './label.component';
 
 @Component({
   selector: 'app-root',
-  imports: [KeyValuePipe, LabelComponent, FormsModule, GenericFormComponent, JsonPipe],
+  imports: [KeyValuePipe, LabelComponent, FormsModule],
   templateUrl: './app.component.html',
 })
 export class AppComponent {
