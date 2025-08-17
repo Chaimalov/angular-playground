@@ -20,10 +20,16 @@ import { VirtualListComponent } from './virtual-list.component';
   ],
 })
 export class QueueComponent {
-  protected items = signal(Array.from({ length: 3000 }, () => ({ id: v4(), creationDate: new Date().toISOString() })));
+  protected items = signal(
+    Array.from({ length: 3000 }, () => ({
+      id: v4(),
+      creationDate: new Date().toISOString(),
+      height: Math.random() * 200 + 100,
+    }))
+  );
 
   protected addItems(): void {
-    const newItem = { id: v4(), creationDate: new Date().toISOString() };
+    const newItem = { id: v4(), creationDate: new Date().toISOString(), height: Math.random() * 200 + 100 };
     this.items.update(items => [newItem, ...items]);
   }
 }

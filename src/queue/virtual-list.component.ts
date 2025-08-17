@@ -1,6 +1,5 @@
 import {
   afterNextRender,
-  afterRenderEffect,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -15,7 +14,6 @@ import {
   input,
   linkedSignal,
   runInInjectionContext,
-  viewChild,
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { debounceTime, fromEvent, map } from 'rxjs';
@@ -48,9 +46,9 @@ export interface VirtualItem<T> {
   selector: 'app-virtual-list',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div #topSentinel class="h-1"></div>
+    <div [style.height.px]="topSpacerHeight()" aria-hidden="true"></div>
     <ng-content></ng-content>
-    <div #bottomSentinel class="h-1"></div>
+    <div [style.height.px]="bottomSpacerHeight()" aria-hidden="true"></div>
   `,
   providers: [
     {
@@ -69,16 +67,20 @@ export class VirtualListComponent<T> {
   private element = inject<ElementRef<HTMLElement>>(ElementRef);
   private cdr = inject(ChangeDetectorRef);
 
-  private topSentinelElement = viewChild.required<ElementRef<HTMLElement>>('topSentinel');
-  private bottomSentinelElement = viewChild.required<ElementRef<HTMLElement>>('bottomSentinel');
-
-  private itemHeight = computed(() => {
-    return Math.max(
-      ...this.element.nativeElement
-        .querySelectorAll<HTMLElement>(':nth-child(-n+3)')
-        .values()
-        .map(item => item.offsetHeight)
+  private averageItemHeight = computed(() => {
+    const heights = Array.from(this.element.nativeElement.querySelectorAll<HTMLElement>(`:nth-child(-n+5)`)).map(
+      item => item.offsetHeight
     );
+
+    return heights.reduce((sum, height) => sum + height, 0) / heights.length;
+  });
+
+  protected topSpacerHeight = computed(() => {
+    return this.renderRange().start * this.averageItemHeight();
+  });
+
+  protected bottomSpacerHeight = computed(() => {
+    return (this.items().length - this.renderRange().end) * this.averageItemHeight();
   });
 
   public pageSize = input(100);
@@ -86,7 +88,7 @@ export class VirtualListComponent<T> {
     toSignal(
       fromEvent(this.element.nativeElement, 'scroll').pipe(
         debounceTime(100),
-        map(() => Math.ceil(this.element.nativeElement.scrollTop / (this.pageSize() * this.itemHeight())))
+        map(() => Math.ceil(this.element.nativeElement.scrollTop / (this.pageSize() * this.averageItemHeight())))
       ),
       { initialValue: 1 }
     )
@@ -133,13 +135,6 @@ export class VirtualListComponent<T> {
   );
 
   constructor() {
-    afterRenderEffect({
-      write: () => {
-        this.topSentinelElement().nativeElement.style.height = `${this.renderRange().start * this.itemHeight()}px`;
-        this.bottomSentinelElement().nativeElement.style.height = `${(this.items().length - this.renderRange().end) * this.itemHeight()}px`;
-      },
-    });
-
     this.destroyRef.onDestroy(() => {
       this.observer.disconnect();
     });
@@ -151,7 +146,7 @@ export class VirtualListComponent<T> {
     runInInjectionContext(this.injector, () => {
       afterNextRender({
         write: () => {
-          this.element.nativeElement.scrollTo({ top: 0, behavior: 'instant' });
+          this.element.nativeElement.scrollTo({ top: 0, behavior: 'auto' });
         },
       });
     });
@@ -163,27 +158,29 @@ export class VirtualListComponent<T> {
     runInInjectionContext(this.injector, () => {
       afterNextRender({
         write: () => {
-          this.element.nativeElement.scrollTo({ top: this.element.nativeElement.scrollHeight, behavior: 'instant' });
+          this.element.nativeElement.scrollTo({ top: this.element.nativeElement.scrollHeight, behavior: 'auto' });
         },
       });
     });
   }
 
   public scrollToIndex(index: number): void {
+    if (index < 0 || index >= this.items().length) {
+      console.warn(`Invalid index "${index}" for scrolling.`);
+      return;
+    }
+
     this.page.set(Math.ceil(index / this.pageSize()));
 
     runInInjectionContext(this.injector, () => {
       afterNextRender({
         earlyRead: () => {
           const { start } = this.renderRange();
-          const domIndex = index - start + 1; // Adjust for 1-based index
-          return this.element.nativeElement.querySelector<HTMLElement>(
-            `:nth-child(${domIndex + 1 /** Adjust for buffer element */})`
-          );
+          return this.element.nativeElement.children.item(index - start + 1 /** Adjust for buffer element */);
         },
         read: element => {
-          if (element) {
-            element.scrollIntoView({ behavior: 'instant' });
+          if (element instanceof HTMLElement) {
+            element.scrollIntoView({ behavior: 'auto' });
             element.focus();
           } else {
             console.warn(`Item with index "${index}" not found in the list.`);

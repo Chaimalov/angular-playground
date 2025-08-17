@@ -22,7 +22,8 @@
         <app-collapsible-card
           appFocusable
           dir="rtl"
-          class="focus:bg-gray-700 animate-fade-in p-4 border block border-amber-100 rounded">
+          [style.height.px]="item.data.height"
+          class="focus:bg-gray-700 p-4 border block border-amber-100 rounded">
           <h2>{{ item.$index }}</h2>
           {{ item.data.creationDate | date: 'HH:mm:ss' }}
           <p>
@@ -32,7 +33,7 @@
         </app-collapsible-card>
       }
 
-      <div placeholder class="h-30 bg-neutral-700 animate-fade-in"></div>
+      <div placeholder class="h-30 bg-neutral-700"></div>
     </app-virtual-item>
   }
 </app-virtual-list>
