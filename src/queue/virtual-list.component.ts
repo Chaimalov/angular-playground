@@ -88,7 +88,7 @@ export class VirtualListComponent<T> {
     toSignal(
       fromEvent(this.element.nativeElement, 'scroll').pipe(
         debounceTime(100),
-        map(() => Math.ceil(this.element.nativeElement.scrollTop / (this.pageSize() * this.averageItemHeight())))
+        map(() => Math.ceil((this.element.nativeElement.scrollTop + this.rootMargin) / (this.pageSize() * this.averageItemHeight())))
       ),
       { initialValue: 1 }
     )
@@ -178,7 +178,7 @@ export class VirtualListComponent<T> {
           const { start } = this.renderRange();
           return this.element.nativeElement.children.item(index - start + 1 /** Adjust for buffer element */);
         },
-        read: element => {
+        write: element => {
           if (element instanceof HTMLElement) {
             element.scrollIntoView({ behavior: 'auto' });
             element.focus();
